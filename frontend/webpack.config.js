@@ -30,6 +30,10 @@ module.exports={
             },
         ],
     },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
+
     devServer: {
         historyApiFallback: true,
     },
@@ -41,4 +45,3 @@ module.exports={
         new CaseSensitivePathsPlugin(),
     ]
 }
-
