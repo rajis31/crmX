@@ -1,7 +1,7 @@
 import React from 'react';
 import "./Sidebar.css";
 
-
+import { Link } from 'react-router-dom';
 import PersonIcon from '@mui/icons-material/Person';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import NotesIcon from '@mui/icons-material/Notes';
@@ -22,9 +22,10 @@ export default function Sidebar() {
           Customers
         </li>
         <li>
-          <NotesIcon className="sidebar__icon"/>
-          Notes
-          
+         <NotesIcon className="sidebar__icon"/>
+          <Link to="/notes">
+            Notes
+          </Link>       
         </li>
         <li>
           <BarChartIcon className="sidebar__icon"/>
