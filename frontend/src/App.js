@@ -1,9 +1,15 @@
 import React from 'react';
+import Sidebar from './components/Sidebar/Sidebar';
+import Topbar from './components/Topbar/Topbar';
 
 export default function App(){
     return (
         <div>
-           <h1> React Boilerplate Works </h1> 
+          <Topbar />
+          <Sidebar />
+          <div className='container'>
+                
+          </div>
         </div>
     );
 }
