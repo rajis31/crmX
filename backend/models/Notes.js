@@ -3,14 +3,10 @@ const db = require("../config/db");
 class Notes{
 
     constructor(username, title, body, date_created){
-        this.username     = username;
-        this.title        = title; 
-        this.body         = body; 
-        this.date_created = date_created;
         this.tablename    = "notes";
     }
 
-    static create_table(){
+    create_table(){
         let sql = `
             create table if not exists ${this.tablename} (
                 id int primary key auto_increment, 
@@ -25,13 +21,18 @@ class Notes{
     }
     
 
-    insert_data(){
+    insert_data(username, title, body, date_created){
         /**
          * Insert a new row into tab;e
          */
 
+         this.username     = username;
+         this.title        = title; 
+         this.body         = body; 
+         this.date_created = date_created;
+
         let sql = `
-            INSERT INTO ${this.tablename} (username, title, body, date_created) VALUES 
+            INSERT INTO ${this.tablename}(username, title, body, date_created) VALUES 
             ('${this.username}','${this.title}','${this.body}', '${this.date_created}');
         `;
 
