@@ -2,7 +2,7 @@ const db = require("../config/db");
 
 class Notes{
 
-    constructor(username, title, body, date_created){
+    constructor(){
         this.tablename    = "notes";
     }
 
@@ -39,13 +39,13 @@ class Notes{
         return db.execute(sql);
     }
 
-    findAll(){
+    findAll(username){
         /**
          * Retrieve all rows
          */
 
         let sql =  `
-            SELECT * FROM ${this.tablename} where username = '${this.username}'; 
+            SELECT * FROM ${this.tablename} where username = '${username}'; 
         `
         return db.execute(sql);
     }
