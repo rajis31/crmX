@@ -31,7 +31,7 @@ class Notes{
          */
 
         let sql = `
-            INSERT INTO notes(username, title, body, date_created) VALUES 
+            INSERT INTO ${this.tablename} (username, title, body, date_created) VALUES 
             ('${this.username}','${this.title}','${this.body}', '${this.date_created}');
         `;
 
