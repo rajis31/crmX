@@ -22,15 +22,13 @@ function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
 
-  axios.post('/login', {
-    firstName: 'Finn',
-    lastName: 'Williams'
-  })
+  axios.get('http://localhost:3000/notes/')
   .then((response) => {
     console.log(response);
   }, (error) => {
     console.log(error);
   });
+
 
   const handleFirstPageButtonClick = (event) => {
     onPageChange(event, 0);
