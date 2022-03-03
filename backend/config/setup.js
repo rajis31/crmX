@@ -16,18 +16,23 @@ async function setup_db(){
 
 
     /* Insert Values */
-    // let note = new Notes("raji","Test 1", "This is body of Test 1", "2022-03-03");
-    // result = await note.insert_data();
-    // console.log(result);
+    result = await note.insert_data("raji","Test 1", "This is body of Test 1", "2022-03-03");
+    console.log(result);
 
-    // note = new Notes("raji","Test 2", "This is body of Test 3", "2022-03-01");
-    // result = await note.insert_data();
-    // console.log(result);
+    result = await note.insert_data("raji","Test 2", "This is body of Test 3", "2022-03-01");
+    console.log(result);
 
-    // note = new Notes("raji","Test 3", "This is body of Test 1", "2022-03-01");
-    // result = await note.insert_data();
-    // console.log(result);
+    result = await note.insert_data("raji","Test 3", "This is body of Test 1", "2022-03-01");
+    console.log(result);
 
+    result = await user.insert_data("raji","Password123",  "2022-03-03", "rajiroy123@yahoo.com");
+    console.log(result);
+
+    result = await user.insert_data("raji","Welcome123",  "2022-03-01","rajiroy123@yahoo.com");
+    console.log(result);
+
+    result = await user.insert_data("raji","Welcome123",  "2022-03-01", "rajiroy123@yahoo.com");
+    console.log(result);
 
     /* Find all Values */
     // [result,_] = await note.findAll();
