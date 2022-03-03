@@ -16,10 +16,21 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import axios from "axios";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
+
+  axios.post('/login', {
+    firstName: 'Finn',
+    lastName: 'Williams'
+  })
+  .then((response) => {
+    console.log(response);
+  }, (error) => {
+    console.log(error);
+  });
 
   const handleFirstPageButtonClick = (event) => {
     onPageChange(event, 0);
@@ -78,25 +89,21 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(name, calories, fat) {
-  return { name, calories, fat };
+function createData(id,title, date, body) {
+  return {id, title, date, body };
 }
 
 const rows = [
-  createData('Cupcake', 305, 3.7),
-  createData('Donut', 452, 25.0),
-  createData('Eclair', 262, 16.0),
-  createData('Frozen yoghurt', 159, 6.0),
-  createData('Gingerbread', 356, 16.0),
-  createData('Honeycomb', 408, 3.2),
-  createData('Ice cream sandwich', 237, 9.0),
-  createData('Jelly Bean', 375, 0.0),
-  createData('KitKat', 518, 26.0),
-  createData('Lollipop', 392, 0.2),
-  createData('Marshmallow', 318, 0),
-  createData('Nougat', 360, 19.0),
-  createData('Oreo', 437, 18.0),
-].sort((a, b) => (a.calories < b.calories ? -1 : 1));
+  createData(1,'Test 1', "02-21-2022", "This is test 1"),
+  createData(2,'Test 2', "02-18-2022", "This is test 2"),
+  createData(3,'Test 3', "01-13-2022", "This is test 3"),
+  createData(4,'Test 4', "01-21-2022", "This is test 4"),
+  createData(5,'Test 5', "02-05-2022", "This is test 5"),
+  createData(6,'Test 6', "01-04-2022", "This is test 6"),
+  createData(7,'Test 7', "01-22-2022", "This is test 7"),
+  createData(8,'Test 8', "01-15-2022", "This is test 8"),
+  createData(9,'Test 9', "01-21-2021", "This is test 9"),
+];
 
 export default function CustomPaginationActionsTable() {
   const [page, setPage] = React.useState(0);
@@ -116,13 +123,13 @@ export default function CustomPaginationActionsTable() {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+    <TableContainer component={Paper} sx={{ miWidth: 400, maxWidth: 700 }}>
+      <Table  aria-label="custom pagination table">
       <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
+            <TableCell style={{fontWeight:"bold"}} align="right" >Title</TableCell>
+            <TableCell style={{fontWeight:"bold"}} align="right">Date</TableCell>
+            <TableCell style={{fontWeight:"bold"}} align="right">Summary</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -130,15 +137,15 @@ export default function CustomPaginationActionsTable() {
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
+            <TableRow key={row.id}>
+              <TableCell component="th" scope="row" style={{ width: 160 }}>
+                {row.title}
               </TableCell>
               <TableCell style={{ width: 160 }} align="right">
-                {row.calories}
+                {row.date}
               </TableCell>
               <TableCell style={{ width: 160 }} align="right">
-                {row.fat}
+                {row.body}
               </TableCell>
             </TableRow>
           ))}
