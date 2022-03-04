@@ -14,24 +14,17 @@ import TableRow from '@mui/material/TableRow';
 import axios from "axios";
 
 function DataTable(props) {
-  const theme = useTheme();
-  const { count, page, rowsPerPage, onPageChange } = props;
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () =>{
-      try {
-        const response = await axios.get('http://localhost:3000/notes/')
-        setRows(response);
-      } catch (error) {
-        console.error(error.message);
+      async function fetchData() {
+        const request = await axios.get("http://localhost:3000/notes");
+        setRows(request.data);
       }
-    }
-
-    fetchData();
+      fetchData();
   }, []);
 
-  
+    console.log(rows);
     return (
       <>
       </>
