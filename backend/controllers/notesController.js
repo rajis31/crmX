@@ -10,3 +10,14 @@ exports.getAllNotes = async (req, res, next) => {
     next(err);
   }
 }
+
+exports.deleteNote = async (req, res, next) => {
+  try{
+      let NTS = new Notes();
+      let [result,_] = await NTS.delete(req.body.id);
+      return res.status(200).json(result);
+  } catch(err){
+    console.log(err);
+    next(err);
+  }
+}
