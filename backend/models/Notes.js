@@ -60,6 +60,15 @@ class Notes{
         `
         return db.execute(sql);
     }
+
+    delete(id){
+        /**
+         * Delete a row
+         */
+        
+        let sql =  `DELETE FROM ${this.tablename} where id=${id}; `;
+        return db.execute(sql);
+    }
 }
 
 module.exports = Notes;
