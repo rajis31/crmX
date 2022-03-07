@@ -19,6 +19,7 @@ import axios from "axios";
 function DataTable(props) {
   const [rows, setRows] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showAddForm, setShowAddModal] = useState(false);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -64,9 +65,6 @@ function DataTable(props) {
       .catch(error => console.log(error));
   }
 
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -77,8 +75,11 @@ function DataTable(props) {
   };
 
   return (
-    <>
-      <TableContainer>
+    
+
+      rows.length > 0  ? 
+       (<>
+         <TableContainer style={{width: "600px"}}>
         <Table>
           <TableHead>
             <TableRow>
@@ -116,7 +117,7 @@ function DataTable(props) {
             <TableRow>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                colSpan={3}
+                colSpan={6}
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
@@ -148,15 +149,23 @@ function DataTable(props) {
         </Box>
       </Modal>
 
-      <Modal open={showModal} className="add-customer-form">
+      <Modal open={showAddForm} className="add-customer-form">
         <Box sx={style}>
           <form>
                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
           </form>
           <Button onClick={() => { setShowModal(false) }}>Close</Button>
         </Box>
-      </Modal>
-    </>
+      </Modal> 
+       </>)  : 
+      
+    <div>No Data available </div> 
+      
+  
+    
+
+
+
   )
 
 }
