@@ -1,0 +1,9 @@
+.add-note-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.form-button-group{
+    margin-top: 1rem;
+}

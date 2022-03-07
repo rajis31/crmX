@@ -1,4 +1,5 @@
 import React from 'react';
+import "./DataTable.css";
 import { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -14,6 +15,7 @@ import TableRow from '@mui/material/TableRow';
 import Modal from '@mui/material/Modal';
 import { Typography } from '@mui/material';
 import { TextField } from '@mui/material';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 import axios from "axios";
 
 function DataTable(props) {
@@ -31,8 +33,9 @@ function DataTable(props) {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: '#000',
-    color: "#fff",
+    fontSize: 14,
+    bgcolor: '#fff',
+    color: "#000",
     border: '2px solid #fff',
     boxShadow: 24,
     p: 4,
@@ -74,11 +77,21 @@ function DataTable(props) {
     setPage(0);
   };
 
+  const handleAddCustomerForm = (e) => {
+    setShowAddModal(true);
+  }
+
   return (
     
-
-      rows.length > 0  ? 
+      <div className='container'>
+      { rows.length > 0  ? 
        (<>
+          <Button 
+            variant="contained" 
+            onClick={handleAddCustomerForm}
+          >
+            Add Note
+          </Button>
          <TableContainer style={{width: "600px"}}>
         <Table>
           <TableHead>
@@ -148,23 +161,43 @@ function DataTable(props) {
           <Button onClick={() => { setShowModal(false) }}>Close</Button>
         </Box>
       </Modal>
+       </>)  : 
 
+    <div>
+      <Button 
+        variant="contained" 
+        onClick={handleAddCustomerForm}
+      >
+        Add Note
+      </Button>
+      <p>No Data available </p>
+    </div> 
+    }
+              
       <Modal open={showAddForm} className="add-customer-form">
         <Box sx={style}>
-          <form>
-               <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+          <Typography align='center'>Add Note</Typography>
+          <form className='add-note-form'>
+               <TextField 
+                    label="Title" 
+                    variant="outlined" 
+                    style={{marginTop: 20}}
+                  />
+               <TextareaAutosize
+                    aria-label="minimum height"
+                    minRows={5}
+                    placeholder="Enter Note Here"
+                    style={{ width: 200, marginTop: 20 }}
+              />
+              <div className='form-button-group'>
+                 <Button onClick={() => { setShowAddModal(false) }}>Add Note</Button>
+                 <Button onClick={() => { setShowAddModal(false) }}>Close</Button>
+              </div>
           </form>
-          <Button onClick={() => { setShowModal(false) }}>Close</Button>
         </Box>
       </Modal> 
-       </>)  : 
-      
-    <div>No Data available </div> 
-      
-  
-    
 
-
+    </div>
 
   )
 
