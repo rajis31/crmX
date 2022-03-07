@@ -1,6 +1,6 @@
 import React from 'react';
 import "./DataTable.css";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
@@ -24,8 +24,8 @@ function DataTable(props) {
   const [showAddForm, setShowAddModal] = useState(false);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  
+  const titleRef = useRef();
+  const bodyRef = useRef();
 
   const style = {
     position: 'absolute',
@@ -68,6 +68,23 @@ function DataTable(props) {
       .catch(error => console.log(error));
   }
 
+
+  async function addRow() {
+    console.log(titleRef.current);
+    axios.post("http://localhost:3000/notes/add",
+      {
+        title: titleRef.current.value,
+        body:  bodyRef.current.value
+      })
+      .then(response => {
+        console.log(response);
+        setShowAddModal(false);
+        document.location.reload();
+      })
+      .catch(error => console.log(error));
+  }
+
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -82,120 +99,122 @@ function DataTable(props) {
   }
 
   return (
-    
-      <div className='container'>
-      { rows.length > 0  ? 
-       (<>
-          <Button 
-            variant="contained" 
+
+    <div className='container'>
+      {rows.length > 0 ?
+        (<>
+          <Button
+            variant="contained"
             onClick={handleAddCustomerForm}
           >
             Add Note
           </Button>
-         <TableContainer style={{width: "600px"}}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              {cols.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align="center"
-                  style={{ fontWeight: "bold" }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {
-              rows.map(row => (
-                <TableRow key={row.id}>
-                  {cols.map(col => (
-                    <TableCell key={col.id}>
-                      {
-                        col.id === "body" ? row[col.id].substring(0, 100) :
-                          col.id === "delete" ? <Button startIcon={< DeleteIcon />} onClick={() => deleteRow(row.id)} >Delete</Button> :
-                            row[col.id]
-                      }
+          <TableContainer style={{ width: "600px" }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {cols.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align="center"
+                      style={{ fontWeight: "bold" }}
+                    >
+                      {column.label}
                     </TableCell>
                   ))}
-
                 </TableRow>
-              ))
-            }
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                colSpan={6}
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: {
-                    'aria-label': 'rows per page',
-                  },
-                  native: true,
-                }}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-    
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </TableContainer>
+              </TableHead>
+
+              <TableBody>
+                {
+                  rows.map(row => (
+                    <TableRow key={row.id}>
+                      {cols.map(col => (
+                        <TableCell key={col.id}>
+                          {
+                            col.id === "body" ? row[col.id].substring(0, 100) :
+                              col.id === "delete" ? <Button startIcon={< DeleteIcon />} onClick={() => deleteRow(row.id)} >Delete</Button> :
+                                row[col.id]
+                          }
+                        </TableCell>
+                      ))}
+
+                    </TableRow>
+                  ))
+                }
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                    colSpan={6}
+                    count={rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    SelectProps={{
+                      inputProps: {
+                        'aria-label': 'rows per page',
+                      },
+                      native: true,
+                    }}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+
+                  />
+                </TableRow>
+              </TableFooter>
+            </Table>
+          </TableContainer>
 
 
-      <Modal open={showModal} className="delete-customer-notification">
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Notification
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Customer Has Been Deleted
-          </Typography>
-          <Button onClick={() => { setShowModal(false) }}>Close</Button>
-        </Box>
-      </Modal>
-       </>)  : 
+          <Modal open={showModal} className="delete-customer-notification">
+            <Box sx={style}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                Notification
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                Customer Has Been Deleted
+              </Typography>
+              <Button onClick={() => { setShowModal(false) }}>Close</Button>
+            </Box>
+          </Modal>
+        </>) :
 
-    <div>
-      <Button 
-        variant="contained" 
-        onClick={handleAddCustomerForm}
-      >
-        Add Note
-      </Button>
-      <p>No Data available </p>
-    </div> 
-    }
-              
+        <div>
+          <Button
+            variant="contained"
+            onClick={handleAddCustomerForm}
+          >
+            Add Note
+          </Button>
+          <p>No Data available </p>
+        </div>
+      }
+
       <Modal open={showAddForm} className="add-customer-form">
         <Box sx={style}>
           <Typography align='center'>Add Note</Typography>
           <form className='add-note-form'>
-               <TextField 
-                    label="Title" 
-                    variant="outlined" 
-                    style={{marginTop: 20}}
-                  />
-               <TextareaAutosize
-                    aria-label="minimum height"
-                    minRows={5}
-                    placeholder="Enter Note Here"
-                    style={{ width: 200, marginTop: 20 }}
-              />
-              <div className='form-button-group'>
-                 <Button onClick={() => { setShowAddModal(false) }}>Add Note</Button>
-                 <Button onClick={() => { setShowAddModal(false) }}>Close</Button>
-              </div>
+            <TextField
+              label="Title"
+              variant="outlined"
+              style={{ marginTop: 20, width: 200 }}
+              inputRef={titleRef}
+            />
+            <TextareaAutosize
+              aria-label="minimum height"
+              minRows={5}
+              placeholder="Enter Note Here"
+              style={{ width: 200, marginTop: 20 }}
+              ref={bodyRef}
+            />
+            <div className='form-button-group'>
+              <Button onClick={() => { addRow() }}>Add Note</Button>
+              <Button onClick={() => { setShowAddModal(false) }}>Close</Button>
+            </div>
           </form>
         </Box>
-      </Modal> 
+      </Modal>
 
     </div>
 
