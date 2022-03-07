@@ -23,7 +23,7 @@ class Notes{
 
     insert_data(username, title, body, date_created){
         /**
-         * Insert a new row into tab;e
+         * Insert a new row into table
          */
 
          this.username     = username;
@@ -45,7 +45,13 @@ class Notes{
          */
 
         let sql =  `
-            SELECT * FROM ${this.tablename} where username = '${username}'; 
+            SELECT 
+               id,
+               title,
+               body, 
+               DATE_FORMAT(date_created, '%m/%d/%Y') as date_created 
+            FROM ${this.tablename} 
+            WHERE username = '${username}'; 
         `
         return db.execute(sql);
     }
