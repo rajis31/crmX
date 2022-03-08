@@ -39,13 +39,14 @@ class Users{
         return db.execute(sql);
     }
 
-    static findUser(username){
+    async findUser(username){
         /**
          * Retrieve Current user
          */
 
         let sql =  `
-            SELECT * FROM ${this.tablename} where username = '${username}'; 
+            SELECT username, password FROM ${this.tablename} 
+            WHERE username = '${username}';
         `
         return db.execute(sql);
     }

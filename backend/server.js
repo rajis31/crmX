@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json()); // parse json bodies in the request object
 
 // Routes
-app.use("/", require("./routes/userRoutes"));
+app.use("/user", require("./routes/userRoutes"));
 app.use("/notes", require("./routes/notesRoutes"));
 
 // Global Error Handler. IMPORTANT function params MUST start with err

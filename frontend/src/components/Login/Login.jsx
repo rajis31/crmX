@@ -4,37 +4,46 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GoogleIcon from '@mui/icons-material/Google';
 import { Button, TextField } from '@mui/material';
-import { useNavigate as navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
 
-    function handleLoginBtn(e) {
-
+    const handleLoginBtn = async (e) => {
+        axios.post("http://localhost:3000/user/login",
+        {
+          username: username,
+          password: password
+        })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => console.log(error));
     }
 
-    function handleRegisterBtn(e) {
+    const handleRegisterBtn = (e) => {
         navigate("register");
     }
 
-    function handleForgotBtn(e) {
+    const handleForgotBtn = (e) => {
         navigate("forgot");
     }
     return (
         <div className='login-form-container'>
             <h1>login</h1>
             <form>
-                <label for="username">username</label>
+                <label htmlFor="username">username</label>
                 <TextField 
                         placeholder='Type your Username' 
                         type="text" 
                         name='username' 
                         onChange={(e) => { setUsername(e.target.value) }} 
                 />
-                <label for="password">password</label>
+                <label htmlFor="password">password</label>
                 <TextField 
                         placeholder='Type your Password' 
                         type="password" 
@@ -42,12 +51,12 @@ export default function Login() {
                         onChange={(e) => { setPassword(e.target.value) }}  
                 />
             </form>
-            <p class="forgot">forgot password?</p>
+            <p className="forgot" onClick={ ()=>{ handleForgotBtn()  } }>forgot password?</p>
             <div className='login-form__btn-group'>
                 <Button
                     variant="contained"
                     color="secondary"
-                    onClick={handleLoginBtn}
+                    onClick={ handleLoginBtn }
                 >
                     Login Here
                 </Button>
@@ -55,7 +64,7 @@ export default function Login() {
                 <Button
                     variant="contained"
                     color="success"
-                    onClick={handleRegisterBtn}
+                    onClick={ handleRegisterBtn }
                 >
                     Register Here
                 </Button>
