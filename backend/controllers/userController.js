@@ -1,5 +1,5 @@
 const Users = require("../models/Users");
-import "bcrypt";
+const bcrypt = require("bcrypt");
 
 exports.loginUser = async (req, res, next) => {
   try{
@@ -15,3 +15,21 @@ exports.loginUser = async (req, res, next) => {
     next(err);
   }
 }
+
+exports.registerUser = async (req, res, next) => {
+  try{
+      let user         = new Users();
+      let username     = req.body.username;
+      let password     = bcrypt.hash(req.body.password,12);
+      let email        = req.body.email;
+      let date_created = new Date().toJSON().slice(0,10).replace(/-/g,'-');
+      let [result,_] = await user.insert_data(username, password, date_created,email);
+      
+      return res(200).json(result);
+      
+  } catch(err){
+    console.log("Something went wrong with user query.");
+    next(err);
+  }
+}
+
