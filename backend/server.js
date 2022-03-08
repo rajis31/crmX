@@ -10,7 +10,8 @@ app.use(cors());
 // Middleware
 app.use(express.json()); // parse json bodies in the request object
 
-// Redirect requests to endpoint starting with /posts to postRoutes.js
+// Routes
+app.use("/", require("./routes/userRoutes"));
 app.use("/notes", require("./routes/notesRoutes"));
 
 // Global Error Handler. IMPORTANT function params MUST start with err
