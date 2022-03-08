@@ -24,7 +24,7 @@ exports.registerUser = async (req, res, next) => {
       let date_created = new Date().toJSON().slice(0,10).replace(/-/g,'-');
       let [result,_] = await user.insert_data(username, password, date_created,email);
       
-      return res(200).json(result);
+      return res.status(200).json(result);
       
   } catch(err){
     console.log("Something went wrong with user query.");
