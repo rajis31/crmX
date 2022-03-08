@@ -35,10 +35,21 @@ export default function Register() {
     }
 
     const clearErrors = () => {
-        setUsernameError(false);
-        setPasswordError(false);
-        setConfirmpasswordError(false);
-        setEmailError(false);
+        if (username.length >0 ){
+            setUsernameError(false);
+        }
+
+        if(password.length > 0 ){
+            setPasswordError(false);
+        }
+
+        if(email.length > 0 ){
+            setEmailError(false);
+        }
+
+        if(password === confirm_password){
+            setConfirmpasswordError(false);
+        }
     }
 
     const handleRegisterBtn = () => {
@@ -55,10 +66,15 @@ export default function Register() {
                     .then(response => {
                         console.log(response);
                         clearErrors();
+                        setRegisterError(false);
                     })
                     .catch(error => setRegisterError(true));
             }
         }
+    }
+
+    const handleLoginBtn = () => {
+        navigate("login");
     }
 
 
@@ -79,7 +95,7 @@ export default function Register() {
                         <Alert severity="error" className='register-form__error-msg'>Please type in a username</Alert> :
                         <div></div>
                 }
-                <label for="email">Confirm Password</label>
+                <label for="email">Email</label>
                 <TextField
                     placeholder='Type your email'
                     type="email"
@@ -92,7 +108,7 @@ export default function Register() {
                         <div></div>
                 }
 
-                <label for="password">password</label>
+                <label for="password">Password</label>
 
                 <TextField
                     placeholder='Type your Password'
@@ -111,6 +127,7 @@ export default function Register() {
                     type="password"
                     name='confirm_password'
                     onChange={(e) => { setConfirmPassword(e.target.value) }}
+                    style={{marginBottom: "10px"}}
                 />
                 {
                     confirmpasswordError ?
@@ -121,19 +138,26 @@ export default function Register() {
                     variant="contained"
                     color="secondary"
                     onClick={handleRegisterBtn}
+                    style={{marginBottom: "10px"}}
                 >
                     Submit to Register
                 </Button>
                 {
                     registerError ?
-                        <Alert severity="error" className='register-form__error-msg'>Could not process your account. Please try again</Alert> :
+                        <Alert 
+                                severity="error" 
+                                className='register-form__error-msg'
+                                style={{marginBottom: "10px"}}
+                        >
+                            Could not process your account. Please try again
+                        </Alert> :
                         <div></div>
                 }
             </form>
             <div className='register-form__btn-group'>
                 <Button
                     variant="contained"
-                    color="secondary"
+                    color="success"
                     onClick={handleLoginBtn}
                 >
                     Return back to Login
