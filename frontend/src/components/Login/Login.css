@@ -80,3 +80,7 @@ h1 {
   background: #DB4437;
   color: #fff;
 }
+
+.login-form__error-msg{
+    margin-top: 1rem;
+}
