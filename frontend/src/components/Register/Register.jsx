@@ -6,7 +6,6 @@ import axios from "axios";
 import Alert from '@mui/material/Alert';
 
 
-
 export default function Register() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -18,6 +17,12 @@ export default function Register() {
     const [emailError, setEmailError] = useState(false);
     const [confirmpasswordError, setConfirmpasswordError] = useState(false);
     const [registerError, setRegisterError] = useState(false);
+
+    const [success, setSuccess] = useState(false);
+
+    const timeout = (delay) => {
+        return new Promise( res => setTimeout(res, delay) );
+    }
 
     const handleErrors = () => {
         if (username.length === 0) {
@@ -35,19 +40,19 @@ export default function Register() {
     }
 
     const clearErrors = () => {
-        if (username.length >0 ){
+        if (username.length > 0) {
             setUsernameError(false);
         }
 
-        if(password.length > 0 ){
+        if (password.length > 0) {
             setPasswordError(false);
         }
 
-        if(email.length > 0 ){
+        if (email.length > 0) {
             setEmailError(false);
         }
 
-        if(password === confirm_password){
+        if (password === confirm_password) {
             setConfirmpasswordError(false);
         }
     }
@@ -61,12 +66,13 @@ export default function Register() {
                     {
                         username: username,
                         password: password,
-                        email:    email
+                        email: email
                     })
                     .then(response => {
-                        console.log(response);
                         clearErrors();
                         setRegisterError(false);
+
+
                     })
                     .catch(error => setRegisterError(true));
             }
@@ -76,7 +82,6 @@ export default function Register() {
     const handleLoginBtn = () => {
         navigate("login");
     }
-
 
     return (
 
@@ -92,7 +97,12 @@ export default function Register() {
                 />
                 {
                     usernameError ?
-                        <Alert severity="error" className='register-form__error-msg'>Please type in a username</Alert> :
+                        <Alert 
+                            severity="error" 
+                            className='register-form__error-msg'
+                        >
+                            Please type in a username
+                        </Alert> :
                         <div></div>
                 }
                 <label for="email">Email</label>
@@ -104,7 +114,12 @@ export default function Register() {
                 />
                 {
                     emailError ?
-                        <Alert severity="error" className='register-form__error-msg'>Please type in a valid email</Alert> :
+                        <Alert 
+                            severity="error" 
+                            className='register-form__error-msg'
+                        >
+                            Please type in a valid email
+                        </Alert> :
                         <div></div>
                 }
 
@@ -127,7 +142,7 @@ export default function Register() {
                     type="password"
                     name='confirm_password'
                     onChange={(e) => { setConfirmPassword(e.target.value) }}
-                    style={{marginBottom: "10px"}}
+                    style={{ marginBottom: "10px" }}
                 />
                 {
                     confirmpasswordError ?
@@ -138,16 +153,16 @@ export default function Register() {
                     variant="contained"
                     color="secondary"
                     onClick={handleRegisterBtn}
-                    style={{marginBottom: "10px"}}
+                    style={{ marginBottom: "10px" }}
                 >
                     Submit to Register
                 </Button>
                 {
                     registerError ?
-                        <Alert 
-                                severity="error" 
-                                className='register-form__error-msg'
-                                style={{marginBottom: "10px"}}
+                        <Alert
+                            severity="error"
+                            className='register-form__error-msg'
+                            style={{ marginBottom: "10px" }}
                         >
                             Could not process your account. Please try again
                         </Alert> :
@@ -163,6 +178,8 @@ export default function Register() {
                     Return back to Login
                 </Button>
             </div>
+
+            
         </div>
 
     )
