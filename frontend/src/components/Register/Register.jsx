@@ -5,7 +5,6 @@ import Alert from '@mui/material/Alert';
 import formHook from './FormHook';
 import validate from "./Validate";
 
-//https://sweetcode.io/creating-form-validations-with-react-hooks/
 
 export default function Register() {
 
