@@ -8,7 +8,16 @@ import Alert from '@mui/material/Alert';
 //https://sweetcode.io/creating-form-validations-with-react-hooks/
 export default function Register() {
 
-    const [inputs, setInputs]
+    const [inputs, setInputs] = useState({username:'',password:'',confirm_password:'', email:''});
+    const validate = (input) =>{
+        const errors = {};
+
+        if(input.email.length===0){
+            errors.emailError=true;
+        }
+        
+
+    }
    
     const timeout = (delay) => {
         return new Promise( res => setTimeout(res, delay) );
