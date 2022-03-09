@@ -5,8 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Alert from '@mui/material/Alert';
 
-
+//https://sweetcode.io/creating-form-validations-with-react-hooks/
 export default function Register() {
+
+    const [inputs, setInputs]
    
     const timeout = (delay) => {
         return new Promise( res => setTimeout(res, delay) );
