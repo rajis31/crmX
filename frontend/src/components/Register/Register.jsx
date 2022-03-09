@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import "./Register.css";
 import { TextField, Button } from '@mui/material';
-import { useNavigate as navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Alert from '@mui/material/Alert';
 
@@ -18,11 +18,40 @@ export default function Register() {
     const [confirmpasswordError, setConfirmpasswordError] = useState(false);
     const [registerError, setRegisterError] = useState(false);
 
+    const [submit, setSubmit] = useState(false);
     const [success, setSuccess] = useState(false);
+    const navigate = useNavigate();
+
+    const firstRender = useRef(true);
 
     const timeout = (delay) => {
         return new Promise( res => setTimeout(res, delay) );
     }
+
+    useEffect(()=>{
+        if(firstRender.current){
+            firstRender.current = false;
+            return;
+        }
+        handleErrors();
+    },[submit], ()=>{
+        if (!(usernameError || passwordError || confirmpasswordError || emailError)) {
+            axios.post("http://localhost:3000/user/register",
+                {
+                    username: username,
+                    password: password,
+                    email: email
+                })
+                .then(async (response) =>  {
+                    clearErrors();
+                    setRegisterError(false);
+                    setSuccess(true);
+                    await timeout(5000);
+                    navigate("../login");
+                })
+                .catch(error => setRegisterError(true));
+        }
+    });
 
     const handleErrors = () => {
         if (username.length === 0) {
@@ -58,25 +87,7 @@ export default function Register() {
     }
 
     const handleRegisterBtn = () => {
-        handleErrors();
-
-        if (!(usernameError || passwordError || confirmpasswordError || emailError)) {
-            if (!usernameError && !passwordError) {
-                axios.post("http://localhost:3000/user/register",
-                    {
-                        username: username,
-                        password: password,
-                        email: email
-                    })
-                    .then(response => {
-                        clearErrors();
-                        setRegisterError(false);
-
-
-                    })
-                    .catch(error => setRegisterError(true));
-            }
-        }
+        setSubmit(true);
     }
 
     const handleLoginBtn = () => {
@@ -88,7 +99,7 @@ export default function Register() {
         <div className='register-form-container'>
             <h1>Register Here</h1>
             <form className='register-form'>
-                <label for="username">Username</label>
+                <label htmlFor="username">Username</label>
                 <TextField
                     placeholder='Type your Username'
                     type="text"
@@ -105,7 +116,7 @@ export default function Register() {
                         </Alert> :
                         <div></div>
                 }
-                <label for="email">Email</label>
+                <label htmlFor="email">Email</label>
                 <TextField
                     placeholder='Type your email'
                     type="email"
@@ -123,7 +134,7 @@ export default function Register() {
                         <div></div>
                 }
 
-                <label for="password">Password</label>
+                <label htmlFor="password">Password</label>
 
                 <TextField
                     placeholder='Type your Password'
@@ -136,7 +147,7 @@ export default function Register() {
                         <Alert severity="error" className='register-form__error-msg'>Please type in a password</Alert> :
                         <div></div>
                 }
-                <label for="password">Confirm Password</label>
+                <label htmlFor="confirm_password">Confirm Password</label>
                 <TextField
                     placeholder='Retype your Password'
                     type="password"
@@ -168,7 +179,23 @@ export default function Register() {
                         </Alert> :
                         <div></div>
                 }
+
+{
+                    success ?
+                        <Alert
+                            severity="success"
+                            className='register-form__success-msg'
+                            style={{ marginBottom: "10px" }}
+                        >
+                            Account successfully created. You will be 
+                            redirected back to the login page.
+                        </Alert> :
+                        <div></div>
+                }
             </form>
+
+          
+            
             <div className='register-form__btn-group'>
                 <Button
                     variant="contained"
