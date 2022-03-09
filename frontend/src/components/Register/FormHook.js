@@ -1,24 +1,56 @@
-const validate = (inputs) =>{
-    const errors = {};
-    console.log(inputs);
+import {useState, useEffect} from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-    if(inputs.email.length === 0){
-        errors.emailError = true;
+const formHook = (inputValues, validate) => {
+    const [inputs, setInputs] =  useState(inputValues);
+    const [errors, setErrors] =  useState({});
+    const [success, setSuccess] = useState(false);
+
+    // useEffect(()=>{
+    //    console.log(inputs); 
+    // },[inputs])
+
+    const navigate = useNavigate();
+
+    const handleLogin = (e) =>{
+        navigate("../login");
     }
 
-    if(inputs.username.length === 0){
-        errors.usernameError = true;
-    }
+    const handleRegistration = (e) => {
+        const errorsFound = validate(inputs);
+        setErrors(errorsFound);
+        const hasErrors = Object.keys(errors).length === 0;
 
-    if(inputs.password.length === 0){
-        errors.passwordError = true;
-    }
+        const timeout = (delay) => {
+            return new Promise( res => setTimeout(res, delay) );
+        }
 
-    if(inputs.username !== inputs.confirm_password){
-        errors.confirmpasswordError = true;
+        if(!hasErrors){
+            axios.post("http://localhost:3000/user/register",
+            {
+                username: inputValues.username,
+                password: inputValues.password,
+                email:    inputValues.email
+            })
+            .then(async (response) =>  {
+                setSuccess(true);
+                await timeout(5000);
+                navigate("../login");
+            })
+            .catch(error => setSuccess(false));
+        }
     }
-
-    return errors;
+    const handleInputChange = (e) => {
+        setInputs(prevState => ({...prevState, [e.target.name]: e.target.value}));
+    }
+    return{
+        handleRegistration,
+        handleInputChange,
+        handleLogin,
+        errors,
+        success
+    }
 }
 
-export default validate;
+export default formHook;
