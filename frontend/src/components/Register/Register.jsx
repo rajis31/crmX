@@ -7,92 +7,11 @@ import Alert from '@mui/material/Alert';
 
 
 export default function Register() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
-    const [confirm_password, setConfirmPassword] = useState("");
-
-    const [usernameError, setUsernameError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [confirmpasswordError, setConfirmpasswordError] = useState(false);
-    const [registerError, setRegisterError] = useState(false);
-
-    const [submit, setSubmit] = useState(false);
-    const [success, setSuccess] = useState(false);
-    const navigate = useNavigate();
-
-    const firstRender = useRef(true);
-
+   
     const timeout = (delay) => {
         return new Promise( res => setTimeout(res, delay) );
     }
 
-    useEffect(()=>{
-        if(firstRender.current){
-            firstRender.current = false;
-            return;
-        }
-        handleErrors();
-    },[submit], ()=>{
-        if (!(usernameError || passwordError || confirmpasswordError || emailError)) {
-            axios.post("http://localhost:3000/user/register",
-                {
-                    username: username,
-                    password: password,
-                    email: email
-                })
-                .then(async (response) =>  {
-                    clearErrors();
-                    setRegisterError(false);
-                    setSuccess(true);
-                    await timeout(5000);
-                    navigate("../login");
-                })
-                .catch(error => setRegisterError(true));
-        }
-    });
-
-    const handleErrors = () => {
-        if (username.length === 0) {
-            setUsernameError(true);
-        }
-        if (password.length === 0) {
-            setPasswordError(true);
-        }
-        if (password !== confirm_password) {
-            setConfirmpasswordError(true);
-        }
-        if (email.length === 0) {
-            setEmailError(true);
-        }
-    }
-
-    const clearErrors = () => {
-        if (username.length > 0) {
-            setUsernameError(false);
-        }
-
-        if (password.length > 0) {
-            setPasswordError(false);
-        }
-
-        if (email.length > 0) {
-            setEmailError(false);
-        }
-
-        if (password === confirm_password) {
-            setConfirmpasswordError(false);
-        }
-    }
-
-    const handleRegisterBtn = () => {
-        setSubmit(true);
-    }
-
-    const handleLoginBtn = () => {
-        navigate("login");
-    }
 
     return (
 
@@ -157,7 +76,12 @@ export default function Register() {
                 />
                 {
                     confirmpasswordError ?
-                        <Alert severity="error" className='register-form__error-msg'>Passwords do not match</Alert> :
+                        <Alert 
+                            severity="error" 
+                            className='register-form__error-msg'
+                        >
+                            Passwords do not match
+                        </Alert> :
                         <div></div>
                 }
                 <Button
