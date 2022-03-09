@@ -1,27 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import "./Register.css";
 import { TextField, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import axios from "axios";
 import Alert from '@mui/material/Alert';
+import formHook from './FormHook';
+import validate from "./Validate";
 
 //https://sweetcode.io/creating-form-validations-with-react-hooks/
+
 export default function Register() {
 
-    const [inputs, setInputs] = useState({username:'',password:'',confirm_password:'', email:''});
-    const validate = (input) =>{
-        const errors = {};
-
-        if(input.email.length===0){
-            errors.emailError=true;
-        }
-        
-
-    }
-   
-    const timeout = (delay) => {
-        return new Promise( res => setTimeout(res, delay) );
-    }
+    const {handleRegistration, handleInputChange, handleLogin, errors, success} = formHook(
+            {
+                username:"",
+                password: "",
+                confirm_password: "",
+                email: ""
+            }, validate
+    );
 
 
     return (
@@ -34,10 +29,11 @@ export default function Register() {
                     placeholder='Type your Username'
                     type="text"
                     name='username'
-                    onChange={(e) => { setUsername(e.target.value) }}
+                    onChange={handleInputChange}
+                    autoComplete="off"
                 />
                 {
-                    usernameError ?
+                    errors.usernameError ?
                         <Alert 
                             severity="error" 
                             className='register-form__error-msg'
@@ -51,10 +47,11 @@ export default function Register() {
                     placeholder='Type your email'
                     type="email"
                     name='email'
-                    onChange={(e) => { setEmail(e.target.value) }}
+                    onChange={handleInputChange}
+                    autoComplete="off"
                 />
                 {
-                    emailError ?
+                    errors.emailError ?
                         <Alert 
                             severity="error" 
                             className='register-form__error-msg'
@@ -70,10 +67,11 @@ export default function Register() {
                     placeholder='Type your Password'
                     type="password"
                     name='password'
-                    onChange={(e) => { setPassword(e.target.value) }}
+                    onChange={handleInputChange}
+                    autoComplete="off"
                 />
                 {
-                    passwordError ?
+                    errors.passwordError ?
                         <Alert severity="error" className='register-form__error-msg'>Please type in a password</Alert> :
                         <div></div>
                 }
@@ -82,11 +80,12 @@ export default function Register() {
                     placeholder='Retype your Password'
                     type="password"
                     name='confirm_password'
-                    onChange={(e) => { setConfirmPassword(e.target.value) }}
+                    onChange={handleInputChange}
                     style={{ marginBottom: "10px" }}
+                    autoComplete="off"
                 />
                 {
-                    confirmpasswordError ?
+                    errors.confirmpasswordError ?
                         <Alert 
                             severity="error" 
                             className='register-form__error-msg'
@@ -98,13 +97,13 @@ export default function Register() {
                 <Button
                     variant="contained"
                     color="secondary"
-                    onClick={handleRegisterBtn}
+                    onClick={handleRegistration}
                     style={{ marginBottom: "10px" }}
                 >
                     Submit to Register
                 </Button>
                 {
-                    registerError ?
+                    errors.registerError ?
                         <Alert
                             severity="error"
                             className='register-form__error-msg'
@@ -135,7 +134,7 @@ export default function Register() {
                 <Button
                     variant="contained"
                     color="success"
-                    onClick={handleLoginBtn}
+                    onClick={handleLogin}
                 >
                     Return back to Login
                 </Button>
