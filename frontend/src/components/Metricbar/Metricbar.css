@@ -1,7 +1,8 @@
 .metric-bar {
-    width: 100%;
     display: flex;
     justify-content: space-between;
+    margin-top: 100px;
+    margin-left: 70px;
   }
   
   .metric {
@@ -13,3 +14,54 @@
     -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   }
+
+.metric-bar__title{
+    font-size: 20px;
+}
+
+.metric-bar__container{
+    margin: 10px 0px;
+    display: flex;
+    align-items: center;
+}
+
+.metric-bar .metric:nth-of-type(1){
+    background-color: #0466c8;
+    color: #fff;
+}
+
+.metric-bar .metric:nth-of-type(2){
+  background-color: #0b090a;
+  color: #fff;
+}
+
+.metric-bar .metric:nth-of-type(3){
+  background-color: #7d8597;
+  color: #fff;
+}
+
+.metric-bar__value{
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.metric-bar__value-change{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.metric-bar__icon{
+    font-size: 14px;
+    margin-left: 5px;
+    color: green;
+}
+
+.metric-bar__icon.negative{
+    color: red;
+}
+
+.featuredSub{
+    font-size: 15px;
+    color: gray;
+}
