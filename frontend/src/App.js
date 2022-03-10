@@ -11,6 +11,7 @@ export default function App(){
           <div className='container'>
                 <BrowserRouter>
                   <Routes>
+                      <Route path="/" element={< Dashboard />}/>
                       <Route path="/login" element={< Login />}/>
                       <Route path="/notes" element={<Notes />} />
                       <Route path="/register" element={<Register />} />
