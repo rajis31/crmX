@@ -4,11 +4,11 @@ const sampleData = ()=>{
     const data = [
             {
                 "name": "raji",
-                "profit": 2500
+                "profit": 10
             },
             {
-                "name": "raji",
-                "profit": 2500
+                "name": "ben",
+                "profit": 20
             }
     ];
 

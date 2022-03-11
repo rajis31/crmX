@@ -1,5 +1,5 @@
 import React from 'react'
-import "./BarChart.css";
+import "./Barchart.css";
 import {
     BarChart,
     Bar,
@@ -12,8 +12,13 @@ import {
 } from 'recharts';
 
 const Barchart = ({ xAxisDataKey,barDataKey, fill, data }) => {
+    console.log("XDataKey: "+xAxisDataKey);
+    console.log("barDataKey: "+barDataKey);
+    console.log("fill: "+fill);
+    console.log(data);
+    
     return (
-        <ResponsiveContainer width="100%" height="100%" className="barchart" >
+        <ResponsiveContainer width="100%" height={300} className="barchart" >
             <BarChart
                 width={500}
                 height={300}
