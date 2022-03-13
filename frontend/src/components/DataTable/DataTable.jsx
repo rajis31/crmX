@@ -191,7 +191,7 @@ function DataTable(props) {
         </div>
       }
 
-      <Modal open={showAddForm} className="add-customer-form">
+      <Modal open={showAddForm} className="add-note-form">
         <Box sx={style}>
           <Typography align='center'>Add Note</Typography>
           <form className='add-note-form'>

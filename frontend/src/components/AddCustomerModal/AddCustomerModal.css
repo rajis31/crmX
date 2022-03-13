@@ -1,0 +1,39 @@
+.add-customer-modal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-customer-form{
+    color: #000;
+    min-width: 300px;
+    min-height: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff !important;
+}
+
+.add-customer-form label{
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.add-customer-form input{
+    padding: .5rem;
+    font-size: 1rem;
+    font-weight: 400;
+    border-radius: .3rem;
+    border: 1px solid #e0e0e0;
+    box-shadow: inset 1px 1px 1px #e0e0e080;
+    color: #4c575c;
+    transition: all .25s ease 0s;
+    width: 200px;
+    margin-top: 10px;
+  }
+.add-customer-modal__title{
+    background-color: #fff;
+    padding-bottom: 20px;
+}

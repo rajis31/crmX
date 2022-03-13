@@ -13,6 +13,8 @@ app.use(express.json()); // parse json bodies in the request object
 // Routes
 app.use("/user", require("./routes/userRoutes"));
 app.use("/notes", require("./routes/notesRoutes"));
+app.use("/customers", require("./routes/customerRoutes"));
+
 
 // Global Error Handler. IMPORTANT function params MUST start with err
 app.use((err, req, res, next) => {
