@@ -55,11 +55,11 @@ class Customers{
         
             let sql = `
                 select customer_name,
-                       date_of_birth,
+                       DATE_FORMAT(date_of_birth, '%m/%d/%Y') as date_of_birth, 
                        email,
                        profit,
                        acquisition_cost,
-                       date_created  
+                       DATE_FORMAT(date_created, '%m/%d/%Y') as date_created  
                 from ${this.tablename} 
                 where username = '${username}';
             `;
