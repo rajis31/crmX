@@ -10,6 +10,7 @@ import axios from 'axios';
 
 function Customer() {
     const [dataRetrieved, setDataRetrieved] = useState({});
+    const [columns, setColumns] = useState([]);
     const [showCustomerModal, setShowCustomerModal]     = useState(false);
     const [showAddCustomerNote, setShowAddCustomerNote] = useState(false);
 
@@ -24,8 +25,9 @@ function Customer() {
     useEffect(()=>{
         async function fetchData() {
             let request = await axios.get("http://localhost:3000/customers");
-            console.log(request.data);
             setDataRetrieved(request.data);
+            request.data?.length >0 ? setColumns(Object.keys(request.data[0])) : 
+                                      setColumns([""]);
           }
           fetchData();
     },[])
@@ -80,6 +82,7 @@ function Customer() {
                 handleAddCustomer={handleAddCustomer}
                 states={setData}
             />
+
 
         <Modal open={showAddCustomerNote} className="add-customer-notification">
             <Box sx={style}>
