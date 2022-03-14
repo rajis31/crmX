@@ -1,33 +1,39 @@
-import React from "react";
-import "./Table.css";
+import React, { useState } from "react";
 
-function Table({fields,rows}) {
-    return (
-     <>
-        <table className="table">
-    <thead>
-        <tr>
-            {
-                fields.map((field,idx)=>{
-                    return <th> {field} </th>
-                }
-            )}
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Dom</td>
-            <td>6000</td>
-        </tr>
-        <tr className="active-row">
-            <td>Melissa</td>
-            <td>5150</td>
-        </tr>
-    </tbody>
-</table>
+import useTable from "./Hook";
+import styles from "./Table.css";
+import TableFooter from "./TableFooter";
 
-     </>
-    )
-  }
+const Table = ({ data, rowsPerPage }) => {
+  const [page, setPage] = useState(1);
+  const { slice, range } = useTable(data, page, rowsPerPage);
+
+
+  return (
+    <>
+      <table className={styles.table}>
+        <thead className={styles.tableRowHeader}>
+          <tr>
+            <th className={styles.tableHeader}>Country</th>
+            <th className={styles.tableHeader}>Capital</th>
+            <th className={styles.tableHeader}>Language</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {slice.map((el) => (
+            <tr className={styles.tableRowItems} key={el.id}>
+              <td className={styles.tableCell}>{el.name}</td>
+              <td className={styles.tableCell}>{el.capital}</td>
+              <td className={styles.tableCell}>{el.language}</td>
+            </tr>
+          ))}
+
+        </tbody>
+      </table>
+      <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
+    </>
+  );
+};
 
 export default Table;
