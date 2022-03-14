@@ -9,95 +9,109 @@ import Table from '../../components/Table/Table';
 import axios from 'axios';
 
 function Customer() {
-    const [dataRetrieved, setDataRetrieved] = useState({});
-    const [columns, setColumns] = useState([]);
-    const [showCustomerModal, setShowCustomerModal]     = useState(false);
-    const [showAddCustomerNote, setShowAddCustomerNote] = useState(false);
+  const [dataRetrieved, setDataRetrieved] = useState([]);
+  const [columns, setColumns] = useState([]);
+  const [showCustomerModal, setShowCustomerModal] = useState(false);
+  const [showAddCustomerNote, setShowAddCustomerNote] = useState(false);
 
-    const [data, setData] = useState({
-                                      customer_name: "", 
-                                      dob: "", 
-                                      email: "", 
-                                      profit: "", 
-                                      acquisition_cost: ""
-                                    });
+  const [data, setData] = useState({
+    customer_name: "",
+    dob: "",
+    email: "",
+    profit: "",
+    acquisition_cost: ""
+  });
 
-    useEffect(()=>{
-        async function fetchData() {
-            let request = await axios.get("http://localhost:3000/customers");
-            setDataRetrieved(request.data);
-            request.data?.length >0 ? setColumns(Object.keys(request.data[0])) : 
-                                      setColumns([""]);
-          }
-          fetchData();
-    },[])
+  useEffect(() => {
+    async function fetchData() {
+      let request = await axios.get("http://localhost:3000/customers");
+      setDataRetrieved(request.data);
 
-    const handleAddCustomerModal = (e) => {
-        setShowCustomerModal(true);
+      request.data?.length > 0 ? setColumns(Object
+        .keys(request.data[0])
+        .map(x => x.toUpperCase().replace(/_/g, " ")))
+        : setColumns(["Customer Name",
+          "DOB",
+          "Email",
+          "Profit",
+          "Acquisiton Cost",
+          "Date Created"]);
     }
 
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        fontSize: 14,
-        bgcolor: '#fff',
-        color: "#000",
-        border: '2px solid #fff',
-        boxShadow: 24,
-        p: 4,
-      };
+    fetchData();
+  }, []);
 
-    const handleAddCustomer = (e) => {
-       axios.post("http://localhost:3000/customers/create", 
-                 { 
-                     customer_name:    data.customer_name,
-                     dob:              data.dob,
-                     email:            data.email,
-                     profit:           data.profit,
-                     acq_cost:         data.acquisition_cost  
-                 })
-      .then(response => {        
+  const handleAddCustomerModal = (e) => {
+    setShowCustomerModal(true);
+  }
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    fontSize: 14,
+    bgcolor: '#fff',
+    color: "#000",
+    border: '2px solid #fff',
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const handleAddCustomer = (e) => {
+    axios.post("http://localhost:3000/customers/create",
+      {
+        customer_name: data.customer_name,
+        dob: data.dob,
+        email: data.email,
+        profit: data.profit,
+        acq_cost: data.acquisition_cost
+      })
+      .then(response => {
         setShowCustomerModal(false);
         setShowAddCustomerNote(true);
       })
       .catch(error => console.log(error));
-    }
+  }
 
-    return (
+  return (
 
-        <div>
-            <Button
-                onClick={handleAddCustomerModal}
-                variant="contained"
-            >
-                Add Customer
-            </Button>
+    <div>
+      <Button
+        onClick={handleAddCustomerModal}
+        variant="contained"
+      >
+        Add Customer
+      </Button>
 
-            <AddCustomerModal
-                showForm={showCustomerModal}
-                setShowForm={setShowCustomerModal}
-                handleAddCustomer={handleAddCustomer}
-                states={setData}
-            />
+      <AddCustomerModal
+        showForm={showCustomerModal}
+        setShowForm={setShowCustomerModal}
+        handleAddCustomer={handleAddCustomer}
+        states={setData}
+      />
 
+      <Table
+        data={dataRetrieved}
+        rowsPerPage={10}
+        columns={columns}
+      />
 
-        <Modal open={showAddCustomerNote} className="add-customer-notification">
-            <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Notification
-              </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Customer Has Been Added
-              </Typography>
-              <Button onClick={() => { setShowAddCustomerNote(false) }}>Close</Button>
-            </Box>
-        </Modal>
-            
-        </div>
-    )
+      <Modal open={showAddCustomerNote} className="add-customer-notification">
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Notification
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Customer Has Been Added
+          </Typography>
+          <Button onClick={() => { setShowAddCustomerNote(false) }}>Close</Button>
+        </Box>
+      </Modal>
+
+    </div>
+  )
 }
 
 export default Customer
