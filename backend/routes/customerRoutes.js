@@ -7,4 +7,6 @@ router.route("/")
       .get(CustomersController.findAllCustomers);
 
 router.route("/create")
-      .get(CustomersController.addCustomer);
+      .post(CustomersController.addCustomer);
+
+module.exports = router; 

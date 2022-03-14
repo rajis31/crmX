@@ -16,16 +16,18 @@ exports.findAllCustomers = async (req, res, next) => {
 
 exports.addCustomer = async (req, res, next) => {
     try{
+
         let customer       = new Customers();
         let username       = "raji"; 
         let customer_name  = req.body.customer_name;
         let dob            = req.body.dob;
         let email          = req.body.email;
         let profit         = req.body.profit; 
-        let acq_cost       = req.body.acqusition_cost; 
+        let acq_cost       = req.body.acq_cost; 
         let date_created   = new Date().toJSON().slice(0,10).replace(/-/g,'-');
-        let [result,_] = await customer.insert_data("raji",
-                                    username, 
+
+        let [result,_] = await customer.insert_data(
+                                    username,
                                     customer_name,
                                     dob, 
                                     email,

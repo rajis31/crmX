@@ -28,10 +28,10 @@ const AddCustomerModal = ({ showForm, setShowForm, handleAddCustomer, states }) 
                         }
                     />
 
-                    <label htmlFor="date-of-birth">Date of Birth</label>
+                    <label htmlFor="dob">Date of Birth</label>
                     <input 
                         type="date" 
-                        name='date_of_birth' 
+                        name='dob' 
                         onChange={ (e) => {
                             states( (prevState) => ({...prevState, [e.target.name]: e.target.value}))}
                         }

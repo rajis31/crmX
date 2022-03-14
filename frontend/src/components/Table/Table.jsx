@@ -7,9 +7,11 @@ function Table({fields,rows}) {
         <table className="table">
     <thead>
         <tr>
-            {fields.map((field,idx)=>{
-                 return <th> {field} </th>
-            })}
+            {
+                fields.map((field,idx)=>{
+                    return <th> {field} </th>
+                }
+            )}
         </tr>
     </thead>
     <tbody>

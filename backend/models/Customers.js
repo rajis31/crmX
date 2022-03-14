@@ -30,7 +30,8 @@ class Customers{
          */
 
         let sql = `
-            INSERT INTO ${this.tablename}(username, 
+            INSERT INTO ${this.tablename}(
+                        username, 
                         customer_name, 
                         date_of_birth, 
                         email, 
@@ -60,7 +61,7 @@ class Customers{
                        acquisition_cost,
                        date_created  
                 from ${this.tablename} 
-                where username = ${username};
+                where username = '${username}';
             `;
     
             return db.execute(sql);
