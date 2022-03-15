@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "./Table.css";
+import "./Table.css";
 import TableFooter from "./TableFooter";
 import { Typography } from '@mui/material';
 
@@ -21,44 +21,53 @@ const Table = ({ data, rowsPerPage, columns }) => {
     return range;
   }
 
-  const slideData = (data, rowsPerPage, page) => {
+  const sliceData = (data, rowsPerPage, page) => {
     return data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
   }
 
   useEffect(() => {
-    setSlice(slideData(data, rowsPerPage, page));
+    setSlice(sliceData(data, rowsPerPage, page));
   }, [page, data]);
 
+  useEffect(() => {
+    setTableRange(pageRange(data, rowsPerPage));
+  }, [data]);
 
-
+  
   return (
     slice?.length > 0 ?
       <>
-        <table className={styles.table}>
-          <thead className={styles.tableRowHeader}>
+        <table className="table">
+          <thead className="tableRowHeader">
             <tr>
               {
                 columns.map((col, idx) => (
-                  <th className={styles.tableHeader} key={idx} >{col}</th>
+                  <th className="tableHeader" key={idx} >{col}</th>
                 ))
               }
             </tr>
           </thead>
           <tbody>
             {
-              data.map((datum, idx2) => {
+              slice.map((datum, idx2) => {
                 let values = Object.values(datum);
 
                 return (
-                  <tr key={idx2}>
-                    {values.map((val, idx) => (<td key={idx}>{val}</td>))}
+                  <tr key={idx2} className="tableRowItems">
+                    {values.map((val, idx) => (<td key={idx} className="tableCell">{val}</td>))}
                   </tr>
                 )
               })
             }
           </tbody>
         </table>
-        {/* <TableFooter range={range} slice={slice} setPage={setPage} page={page} /> */}
+        <TableFooter
+          tableRange={tableRange}
+          setPage={setPage}
+          page={page}
+          slice={slice}
+        />
+
       </> :
       <>
         <Typography variant="h4" >
