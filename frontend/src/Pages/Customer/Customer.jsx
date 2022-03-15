@@ -94,7 +94,7 @@ function Customer() {
 
       <Table
         data={dataRetrieved}
-        rowsPerPage={10}
+        rowsPerPage={5}
         columns={columns}
       />
 
@@ -106,7 +106,7 @@ function Customer() {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Customer Has Been Added
           </Typography>
-          <Button onClick={() => { setShowAddCustomerNote(false) }}>Close</Button>
+          <Button onClick={() => { window.location.reload() }}>Close</Button>
         </Box>
       </Modal>
 
