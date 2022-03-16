@@ -85,7 +85,7 @@ class Customers {
 
         let sql = `
             SELECT
-            AVG(datediff(curdate(), date_created)) as days_between 
+            IFNULL(AVG(datediff(curdate(), date_created)),0) as days_between 
             FROM customers
             WHERE datediff(curdate(), date_created)  <= 365
             AND username = "${username}";

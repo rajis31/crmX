@@ -75,6 +75,19 @@ class Notes{
         let sql =  `DELETE FROM ${this.tablename} where id=${id}; `;
         return db.execute(sql);
     }
+
+    countNotes(username){
+        /**
+         * Count # of notes a customer created 
+         */
+
+         let sql =  `
+            SELECT count(*) FROM 
+            ${this.tablename} 
+            WHERE username = '${this.username}'; 
+        `
+        return db.execute(sql);
+    }
 }
 
 module.exports = Notes;
