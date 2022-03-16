@@ -71,7 +71,7 @@ class Customers {
         /**
          * Find the number of customers a user has created
          */
-        let sql = `SELECT COUNT(*) 
+        let sql = `SELECT COUNT(*) as num_customers
                    FROM ${this.tablename} 
                    WHERE username = '${username}';`;
 
