@@ -88,6 +88,37 @@ class Notes{
         `
         return db.execute(sql);
     }
+
+    delta(username, days){
+        /**
+         * Return the change in customers created
+         */
+
+        let sql = `
+                SELECT 
+                SUM(CASE
+                    WHEN DATEDIFF(CURDATE(), date_created) = 0 THEN 1
+                    ELSE 0
+                END) AS num_notes_today,
+                SUM(CASE
+                    WHEN DATEDIFF(CURDATE(), date_created) = ${days} THEN 1
+                    ELSE 0
+                END) AS num_notes_yesterday,
+                SUM(CASE
+                    WHEN DATEDIFF(CURDATE(), date_created) = 0 THEN 1
+                    ELSE 0
+                END) - SUM(CASE
+                    WHEN DATEDIFF(CURDATE(), date_created) = ${days} THEN 1
+                    ELSE 0
+                END) AS diff
+            FROM
+                ${this.tablename}
+            WHERE
+                username = '${username}';
+        `
+
+        return db.execute(sql);
+    }
 }
 
 module.exports = Notes;
