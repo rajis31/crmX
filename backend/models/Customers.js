@@ -1,12 +1,12 @@
 const db = require("../config/db");
 
-class Customers{
+class Customers {
 
-    constructor(){
-        this.tablename    = "customers";
+    constructor() {
+        this.tablename = "customers";
     }
 
-    create_table(){
+    create_table() {
         let sql = `
             create table if not exists ${this.tablename} (
                 id int primary key auto_increment, 
@@ -22,9 +22,9 @@ class Customers{
 
         return db.execute(sql);
     }
-    
 
-    insert_data(username, customer_name, dob, email, profit, acquisition_cost, date_created){
+
+    insert_data(username, customer_name, dob, email, profit, acquisition_cost, date_created) {
         /**
          * Insert a new row into table
          */
@@ -51,9 +51,9 @@ class Customers{
         return db.execute(sql);
     }
 
-    findAll(username){
-        
-            let sql = `
+    findAll(username) {
+
+        let sql = `
                 select customer_name,
                        DATE_FORMAT(date_of_birth, '%m/%d/%Y') as date_of_birth, 
                        email,
@@ -63,11 +63,36 @@ class Customers{
                 from ${this.tablename} 
                 where username = '${username}';
             `;
-    
-            return db.execute(sql);
+
+        return db.execute(sql);
     }
 
-    
+    countCustomrs(username) {
+        /**
+         * Find the number of customers a user has created
+         */
+        let sql = `SELECT COUNT(*) 
+                   FROM ${this.tablename} 
+                   WHERE username = '${username}';`;
+
+        return db.execute(sql);
+    }
+
+    avgCustomersYTD(username) {
+        /**
+         * Find the Avg # of customers created YTD
+         */
+
+        let sql = `
+            SELECT
+            AVG(datediff(curdate(), date_created)) as days_between 
+            FROM customers
+            WHERE datediff(curdate(), date_created)  <= 365
+            AND username = "${username}";
+        `;
+
+        return db.execute(sql);
+    }
 }
 
 module.exports = Customers;
