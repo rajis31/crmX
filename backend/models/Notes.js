@@ -84,7 +84,7 @@ class Notes{
          let sql =  `
             SELECT count(*) as num_notes FROM 
             ${this.tablename} 
-            WHERE username = '${this.username}'; 
+            WHERE username = '${username}'; 
         `
         return db.execute(sql);
     }
