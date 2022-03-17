@@ -10,15 +10,22 @@ import {
     Legend,
     ResponsiveContainer
 } from 'recharts';
+import { Typography } from '@mui/material';
 
 const Barchart = ({ xAxisDataKey, barDataKey, fill, data, title }) => {
+
+
 
     return (
         <>
             {data?.length > 0 ?
                 <>
-                    <div className='chart-title'> {title} </div>
-                    <ResponsiveContainer width={350} height={300} className="barchart" >
+                    <div className='bar-chart__title'>
+                        <Typography variant='h5'>
+                            {title}
+                        </Typography>
+                    </div>
+                    <ResponsiveContainer width={500} height={300} className="barchart" >
                         <BarChart
                             width={500}
                             height={300}
@@ -38,8 +45,13 @@ const Barchart = ({ xAxisDataKey, barDataKey, fill, data, title }) => {
                             <Bar dataKey={barDataKey} fill={fill} />
                         </BarChart>
                     </ResponsiveContainer>
-                </> : <>
-                    <div className='chart-title'> {title} </div>
+                </> :
+                <>
+                    <div className='bar-chart__title'>
+                        <Typography variant='h5'>
+                            {title}
+                        </Typography>
+                    </div>
                     <ResponsiveContainer width="100%" height={300} className="barchart" >
                         <BarChart
                             width={500}
