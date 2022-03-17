@@ -3,16 +3,21 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import Topbar from '../../components/Topbar/Topbar';
 import Metricbar from '../../components/Metricbar/Metricbar';
 import Barchart from '../../components/Charts/Barchart/Barchart';
+import Linechart from '../../components/Charts/Linechart/Linechart';
 import axios from "axios";
 
 function Dashboard() {
 
-  const [data, setData] = useState([]);
+  const [topCustomers, setTopCustomers] = useState([]);
+  const [cumulativeCustomer, setCumulativeCustomer] = useState([]);
   
 
   useEffect(async ()=>{
       let data = await axios.get("http://localhost:3000/stats/get_top_customers");
-      setData(data.data);
+      setTopCustomers(data.data);
+
+      data = await axios.get("http://localhost:3000/stats/get_cumulative_customer_total");
+      setCumulativeCustomer(data.data);
   },[]);
 
 
@@ -23,13 +28,26 @@ function Dashboard() {
       <Sidebar />
       <div>
         <Metricbar />
-        <Barchart
-          xAxisDataKey="customer_name"
-          barDataKey="profit"
-          fill="#4361ee"
-          data={data}
-          title={"Top 5 Customers"}
-        />
+        <div className='charts'>
+            <Barchart
+              xAxisDataKey="customer_name"
+              barDataKey="profit"
+              fill="#4361ee"
+              data={topCustomers}
+              title="Top 5 Customers"
+            />
+
+            <Linechart 
+               data={cumulativeCustomer}
+               xAxisDataKey="day"
+               lineKey="cum_sum"
+               lineColor="#000"
+               title="Total Customers Added (Past 30 days)"
+            />
+
+
+        </div>
+       
       </div>
     </>
 
