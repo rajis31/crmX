@@ -21,7 +21,7 @@ function Metricbar() {
                 <div className='metric-bar__container'>
                     <span className="metric-bar__value">
                         {
-                            parseFloat(metrics.num_notes) < 0 ? metrics.num_notes : "+" + metrics.num_notes 
+                            parseFloat(metrics.num_notes) < 0 ? metrics.num_notes : "+" + metrics.num_notes
                         }
 
                     </span>
@@ -33,7 +33,7 @@ function Metricbar() {
                         }
 
                         {
-                            parseFloat(metrics.notes_delta) < 0 ?  metrics.notes_delta : "+" +  metrics.notes_delta 
+                            parseFloat(metrics.notes_delta) < 0 ? metrics.notes_delta : "+" + metrics.notes_delta
                         }
 
                     </span>
@@ -43,9 +43,9 @@ function Metricbar() {
             <div className="metric">
                 <div className="metric-bar__title"># of Contacts</div>
                 <div className='metric-bar__container'>
-                <span className="metric-bar__value">
+                    <span className="metric-bar__value">
                         {
-                            parseFloat(metrics.num_customers) < 0 ?  metrics.num_customers : "+" + metrics.num_customers 
+                            parseFloat(metrics.num_customers) < 0 ? metrics.num_customers : "+" + metrics.num_customers
                         }
 
                     </span>
@@ -57,7 +57,7 @@ function Metricbar() {
                         }
 
                         {
-                            parseFloat(metrics.customer_delta) < 0 ?  metrics.customer_delta : "+" + metrics.customer_delta 
+                            parseFloat(metrics.customer_delta) < 0 ? metrics.customer_delta : "+" + metrics.customer_delta
                         }
 
                     </span>
@@ -67,9 +67,9 @@ function Metricbar() {
             <div className="metric">
                 <div className="metric-bar__title">Avg Clients Added YTD</div>
                 <div className='metric-bar__container'>
-                <span className="metric-bar__value">
+                    <span className="metric-bar__value">
                         {
-                            parseFloat(metrics.num_customers) < 0 ?metrics.num_customers : "+" + metrics.num_customers 
+                            parseFloat(metrics.num_customers) < 0 ? metrics.num_customers : "+" + metrics.num_customers
                         }
 
                     </span>
@@ -81,7 +81,7 @@ function Metricbar() {
                         }
 
                         {
-                            parseFloat(metrics.customer_delta) < 0 ? metrics.customer_delta : "+" + metrics.customer_delta 
+                            parseFloat(metrics.customer_delta) < 0 ? metrics.customer_delta : "+" + metrics.customer_delta
                         }
 
                     </span>

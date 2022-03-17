@@ -15,10 +15,10 @@ const Barchart = ({ xAxisDataKey, barDataKey, fill, data, title }) => {
 
     return (
         <>
-            { data?.length > 0 ?
+            {data?.length > 0 ?
                 <>
                     <div className='chart-title'> {title} </div>
-                    <ResponsiveContainer width="100%" height={300} className="barchart" >
+                    <ResponsiveContainer width={350} height={300} className="barchart" >
                         <BarChart
                             width={500}
                             height={300}
@@ -38,13 +38,13 @@ const Barchart = ({ xAxisDataKey, barDataKey, fill, data, title }) => {
                             <Bar dataKey={barDataKey} fill={fill} />
                         </BarChart>
                     </ResponsiveContainer>
-                </> :   <>
+                </> : <>
                     <div className='chart-title'> {title} </div>
                     <ResponsiveContainer width="100%" height={300} className="barchart" >
                         <BarChart
                             width={500}
                             height={300}
-                            data={[{name:"No Data", y: 0  }]}
+                            data={[{ name: "No Data", y: 0 }]}
                             margin={{
                                 top: 5,
                                 right: 30,
@@ -60,7 +60,7 @@ const Barchart = ({ xAxisDataKey, barDataKey, fill, data, title }) => {
                             <Bar dataKey="y" fill={fill} />
                         </BarChart>
                     </ResponsiveContainer>
-                </> 
+                </>
 
             }
         </>

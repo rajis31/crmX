@@ -124,6 +124,21 @@ class Customers {
 
         return db.execute(sql);
     }
+
+    topX(username,x){
+        /**
+         * Return top X customers
+         */
+        let sql = `
+            SELECT customer_name, profit 
+            FROM ${this.tablename}
+            WHERE username = '${username}'
+            ORDER by profit desc
+            LIMIT ${x}; 
+        `;
+
+        return db.execute(sql);
+    }
 }
 
 module.exports = Customers;

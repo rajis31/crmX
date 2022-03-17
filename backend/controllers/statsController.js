@@ -29,3 +29,18 @@ exports.getMetricStats = async (req, res, next) => {
       next(err);
     }
   }
+
+  exports.geTopCustomers = async (req, res, next) => {
+    try{
+        const customers = new Customers();
+        const username  = "raji";
+        let [topCustomers, ]         = await customers.topX(username,5);
+
+        console.log(topCustomers);
+        res.status(200).json(topCustomers);
+
+    } catch(err){
+      console.log("Something went wrong with user query.");
+      next(err);
+    }
+  }

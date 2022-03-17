@@ -6,4 +6,7 @@ const router  = express.Router();
 router.route("/get_metric_stats")
       .get(statsController.getMetricStats);
 
+router.route("/get_top_customers")
+      .get(statsController.geTopCustomers);
+
 module.exports = router;
