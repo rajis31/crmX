@@ -9,4 +9,7 @@ router.route("/get_metric_stats")
 router.route("/get_top_customers")
       .get(statsController.geTopCustomers);
 
+router.route("/get_cumulative_customer_total")
+      .get(statsController.geCumulativeCustomerTotal);
+
 module.exports = router;
