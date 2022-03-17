@@ -44,3 +44,20 @@ exports.getMetricStats = async (req, res, next) => {
       next(err);
     }
   }
+
+
+  
+  exports.geCumulativeCustomerTotal = async (req, res, next) => {
+    try{
+        const customers    = new Customers();
+        const username     = "raji";
+        let [cumulative, ] = await customers.cumulative(username);
+
+        console.log(cumulative);
+        res.status(200).json(cumulative);
+
+    } catch(err){
+      console.log("Something went wrong with user query.");
+      next(err);
+    }
+  }
