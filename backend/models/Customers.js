@@ -139,6 +139,24 @@ class Customers {
 
         return db.execute(sql);
     }
+
+    cumulative(username){
+        let sql = `
+            select p.day, p.cnt, sum(p.cnt) over (order by day) as cum_sum  from 
+            ( SELECT 
+                DAY(date_created) AS day, 
+                COUNT(id) as cnt
+            FROM
+                ${this.tablename}
+            WHERE
+                username = '${username}'
+                    AND date_created >= DATEDIFF(CURDATE(), date_created) <= 30
+            GROUP BY day)
+            as p ;
+        `;
+
+        return db.execute(sql);
+    }
 }
 
 module.exports = Customers;
