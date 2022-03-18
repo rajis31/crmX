@@ -7,7 +7,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import NotesIcon from '@mui/icons-material/Notes';
 import HomeIcon from '@mui/icons-material/Home';
 import BlurLinearIcon from '@mui/icons-material/BlurLinear';
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export default function Sidebar() {
   return (
@@ -31,9 +31,14 @@ export default function Sidebar() {
           <BarChartIcon className="sidebar__icon"/>
           Reports
         </li>
+        <li className='sidebar__icon'>
+          <AccountCircleIcon />
+          Profile
+        </li>
         <li className='sidebar__icon active'>
           <BlurLinearIcon />
         </li>
+      
 
       </ul>
  
