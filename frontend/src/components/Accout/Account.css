@@ -1,0 +1,16 @@
+.account-container__form{
+    display: flex;
+    flex-direction: column;
+    max-width: 450px;
+    padding-left: 100px;
+}
+.account-container__title{
+    padding-left: 100px;
+    padding-top: 25px;
+}
+.account-container__form label{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    font-size: 14px;
+}
