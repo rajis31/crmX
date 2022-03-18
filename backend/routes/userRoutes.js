@@ -8,5 +8,7 @@ router.route("/login")
       .post(UserControllers.loginUser);
 router.route("/register")
       .post(UserControllers.registerUser);
+router.route("/update")
+      .post(UserControllers.updateUser);
       
 module.exports = router; 
