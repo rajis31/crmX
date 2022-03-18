@@ -5,6 +5,7 @@ import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import Customer from './Pages/Customer/Customer';
+import Account from './Pages/Account/Account';
 
 export default function App(){
     return (
@@ -17,6 +18,7 @@ export default function App(){
                       <Route path="/notes" element={<Notes />} />
                       <Route path="/register" element={<Register />} />
                       <Route path="/customer" element={<Customer />} />
+                      <Route path="/Account" element={<Account />} />
                   </Routes>
                 </BrowserRouter>
           </div>
