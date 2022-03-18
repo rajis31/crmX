@@ -3,12 +3,19 @@ require("dotenv").config(); // ALLOWS ENVIRONMENT VARIABLES TO BE SET ON PROCESS
 const express = require("express");
 const app     = express();
 const cors    = require("cors");
+const multer = require("multer");
+const path = require('path');
+
 
 // Cross Origin 
 app.use(cors());
 
 // Middleware
 app.use(express.json()); // parse json bodies in the request object
+
+let img_path = path.join( path.dirname(path.dirname(path.dirname(__filename))), "frontend");
+app.use(express.static(img_path,"public"));
+
 
 // Routes
 app.use("/user", require("./routes/userRoutes"));
