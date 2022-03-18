@@ -32,3 +32,12 @@ exports.registerUser = async (req, res, next) => {
   }
 }
 
+exports.updateUser = async (req,res,next) => {
+  try{
+    return res.status(200);
+    
+} catch(err){
+    next(err);
+  }
+
+}
