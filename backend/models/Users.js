@@ -50,20 +50,39 @@ class Users {
         return db.execute(sql);
     }
 
+    async authorize(username, password) {
+        /**
+         * Authorize user based on username and password
+         */
+        const [result,_] = await this.findUser(username);
+        let authorize    = result?.length>0 ?
+                         bcrypt.compare(result[0].password, password) ?true : false :
+                         false;
+
+
+        return authorize;
+    }
+
     async updateUser(username, img_path, user_id) {
         /**
          * Update user
          */
-        let user_found = await this.findUser(username);
-        console.log(user_found);
+        let [result, _] = await this.findUser(username);
+        let user_found = false;
+        result[0]?.length > 0 ? user_found = true : user_found = false;
 
-        let sql = `
-         UPDATE ${this.tablename}  
-            SET username = '${username}',
-                img_path = '${img_path}'
-         WHERE id = '${user_id}';
-        `
-        return db.execute(sql);
+        if (user_found) {
+            let sql = `
+            UPDATE ${this.tablename}  
+               SET username = '${username}',
+                   img_path = '${img_path}'
+            WHERE id = '${user_id}';
+           `
+            return db.execute(sql);
+        } else {
+            let sql = `SELECT 1 from ${this.tablename};`;
+            return db.execute(sql);
+        }
 
     }
 
