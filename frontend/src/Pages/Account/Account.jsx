@@ -8,7 +8,6 @@ import axios from 'axios';
 
 function Account() {
     const [username, setUsername] = useState("");
-    const [name, setName] = useState("");
     const [img, setImg] = useState();
     const [imgSizeNotification, setimgSizeNotification] = useState(false);
 
@@ -19,7 +18,6 @@ function Account() {
     const handleAccountSubmit = async (e) => {
         const data = new FormData();
         data.append("username", username);
-        data.append("name", name);
         data.append("image", img);
 
         const config = {
@@ -38,12 +36,25 @@ function Account() {
 
     const handleImgChange = (e) => {
         if (e.target.files && e.target.files[0]) {
-            let img = e.target.files[0];
-            if (img.size <= 1000000) {
-                setImg(img);
-            } else {
-                setimgSizeNotification(true);
-            }
+            let img       = e.target.files[0];
+
+            let _URL = window.URL || window.webkitURL;
+            const new_img  = new Image(); 
+            let objectUrl  = _URL.createObjectURL(img);
+    
+            new_img.onload = function () {
+                if(this.height > 400 && this.width >400){
+                    console.log("Image size exceeds 400x400");
+                }
+
+                if (img.size <= 1000000) {
+                    setImg(img);
+                } else {
+                    setimgSizeNotification(true);
+                }
+                _URL.revokeObjectURL(objectUrl);
+            };
+            new_img.src = objectUrl;          
         }       
     }
 
@@ -56,12 +67,6 @@ function Account() {
                 </Typography>
                 <div className='account-container__form-section' userid="1" >
                     <form className='account-container__form'>
-                        <label htmlFor='name'>First Name</label>
-                        <TextField
-                            placeholder='Name'
-                            name='name'
-                            onChange={(e) => { setName(e.target.value);  }}
-                        />
                         <label htmlFor='username'>Username</label>
                         <TextField
                             placeholder='Username'
@@ -83,16 +88,12 @@ function Account() {
                         </label>
                         <input
                             accept="image/png, image/gif, image/jpeg"
-                            id="raised-button-file"
                             name='image'
                             type="file"
                             onChange={ handleImgChange }
+                            style={{marginBottom: "1rem"}}
                         />
-                        {/* <label htmlFor="raised-button-file">
-                            <Button variant="contained" component="span">
-                                Upload
-                            </Button>
-                        </label> */}
+
                         <Button 
                             variant="contained"
                             onClick={handleAccountSubmit}
