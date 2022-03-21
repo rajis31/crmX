@@ -16,30 +16,45 @@ function Account() {
 
     },[]);
 
-    const handleAccountSubmit = (e) => {
-        const data = {
-            name: name,
-            username: username,
-            img: img
+    const handleAccountSubmit = async (e) => {
+        // const data = {
+        //     name: name,
+        //     username: username,
+        //     data: img
+        // }
+        
+        const data = new FormData();
+        data.append("username", username);
+        data.append("name", name);
+        data.append("image", img);
+
+        const config = {
+            headers: { 'Content-Type': 'multipart/form-data' }
         }
 
-        axios.post("http://localhost:3000/user/update",data)
-             .then((res)=>{ console.log(res); });
+        axios.post("http://localhost:3000/user/update",data, config)
+             .then((res)=>{ console.log(res); })
+             .catch((err)=>{ console.log(err) });
     }
+
+
     const handleCloseImgSizeNotification = (e) => {
         setimgSizeNotification(false);
     }
 
     const handleImgChange = (e) => {
-        if (e.target.files && e.target.files[0]) {
+        // if (e.target.files && e.target.files[0]) {
+        //     let img = e.target.files[0];
+        //     if (img.size <= 1000000) {
+        //         setImg(img);
+        //     } else {
+        //         setimgSizeNotification(true);
+        //     }
+        // }
+            console.log(e.target.files[0]);
             let img = e.target.files[0];
-            if (img.size <= 1000000) {
-                setImg(URL.createObjectURL(img));
-            } else {
-                setimgSizeNotification(true);
-            }
-
-        }
+            setImg(img);
+       
     }
 
     return (
@@ -78,17 +93,16 @@ function Account() {
                         </label>
                         <input
                             accept="image/png, image/gif, image/jpeg"
-                            style={{ display: 'none' }}
                             id="raised-button-file"
-                            multiple
+                            name='image'
                             type="file"
-                            onChange={handleImgChange}
+                            onChange={ handleImgChange }
                         />
-                        <label htmlFor="raised-button-file">
+                        {/* <label htmlFor="raised-button-file">
                             <Button variant="contained" component="span">
                                 Upload
                             </Button>
-                        </label>
+                        </label> */}
                         <Button 
                             variant="contained"
                             onClick={handleAccountSubmit}

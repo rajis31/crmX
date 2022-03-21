@@ -1,5 +1,6 @@
 const Users = require("../models/Users");
 
+
 exports.loginUser = async (req, res, next) => {
   try{
       let user    = new Users();
@@ -34,7 +35,10 @@ exports.registerUser = async (req, res, next) => {
 
 exports.updateUser = async (req,res,next) => {
   try{
-    return res.status(200);
+
+    console.log(req.body);
+    console.log(req.file);
+    return res.status(200).json({file:"Blah"});
     
 } catch(err){
     next(err);
