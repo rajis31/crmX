@@ -5,11 +5,12 @@ const multer = require('multer');
 const path = require('path');
 
 
-// let img_path = path.join("./");
+let img_path = path.join(__dirname,"../../frontend/public/images");
+console.log(img_path);
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./")
+    cb(null, img_path)
   },
   filename: function (req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now());

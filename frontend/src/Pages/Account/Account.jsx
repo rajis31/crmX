@@ -17,12 +17,6 @@ function Account() {
     },[]);
 
     const handleAccountSubmit = async (e) => {
-        // const data = {
-        //     name: name,
-        //     username: username,
-        //     data: img
-        // }
-        
         const data = new FormData();
         data.append("username", username);
         data.append("name", name);
@@ -43,18 +37,14 @@ function Account() {
     }
 
     const handleImgChange = (e) => {
-        // if (e.target.files && e.target.files[0]) {
-        //     let img = e.target.files[0];
-        //     if (img.size <= 1000000) {
-        //         setImg(img);
-        //     } else {
-        //         setimgSizeNotification(true);
-        //     }
-        // }
-            console.log(e.target.files[0]);
+        if (e.target.files && e.target.files[0]) {
             let img = e.target.files[0];
-            setImg(img);
-       
+            if (img.size <= 1000000) {
+                setImg(img);
+            } else {
+                setimgSizeNotification(true);
+            }
+        }       
     }
 
     return (

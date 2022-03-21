@@ -35,10 +35,7 @@ exports.registerUser = async (req, res, next) => {
 
 exports.updateUser = async (req,res,next) => {
   try{
-
-    console.log(req.body);
-    console.log(req.file);
-    return res.status(200).json({file:"Blah"});
+    return res.status(200).json({file:"Successfully Uploaded Image"});
     
 } catch(err){
     next(err);
