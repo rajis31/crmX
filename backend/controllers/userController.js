@@ -35,7 +35,13 @@ exports.registerUser = async (req, res, next) => {
 
 exports.updateUser = async (req,res,next) => {
   try{
-    return res.status(200).json({file:"Successfully Uploaded Image"});
+    let user             = new Users();
+    let user_id          = 1;
+    let updated_username = req.body.username; 
+    let update_img_path  = "public/images"+user_id+".jpg";
+
+    user.updateUser(updated_username,update_img_path,user_id);
+    return res.status(200).json({file:"Successfully updated user"});
     
 } catch(err){
     next(err);
