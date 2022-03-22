@@ -8,13 +8,13 @@ import validate from "./Validate";
 
 export default function Register() {
 
-    const {handleRegistration, handleInputChange, handleLogin, errors, success} = formHook(
-            {
-                username:"",
-                password: "",
-                confirm_password: "",
-                email: ""
-            }, validate
+    const { handleRegistration, handleInputChange, handleLogin, errors, success } = formHook(
+        {
+            username: "",
+            password: "",
+            confirm_password: "",
+            email: ""
+        }, validate
     );
 
 
@@ -33,8 +33,8 @@ export default function Register() {
                 />
                 {
                     errors.usernameError ?
-                        <Alert 
-                            severity="error" 
+                        <Alert
+                            severity="error"
                             className='register-form__error-msg'
                         >
                             Please type in a username
@@ -51,8 +51,8 @@ export default function Register() {
                 />
                 {
                     errors.emailError ?
-                        <Alert 
-                            severity="error" 
+                        <Alert
+                            severity="error"
                             className='register-form__error-msg'
                         >
                             Please type in a valid email
@@ -85,8 +85,8 @@ export default function Register() {
                 />
                 {
                     errors.confirmpasswordError ?
-                        <Alert 
-                            severity="error" 
+                        <Alert
+                            severity="error"
                             className='register-form__error-msg'
                         >
                             Passwords do not match
@@ -113,22 +113,22 @@ export default function Register() {
                         <div></div>
                 }
 
-{
+                {
                     success ?
                         <Alert
                             severity="success"
                             className='register-form__success-msg'
                             style={{ marginBottom: "10px" }}
                         >
-                            Account successfully created. You will be 
+                            Account successfully created. You will be
                             redirected back to the login page.
                         </Alert> :
                         <div></div>
                 }
             </form>
 
-          
-            
+
+
             <div className='register-form__btn-group'>
                 <Button
                     variant="contained"
@@ -139,7 +139,7 @@ export default function Register() {
                 </Button>
             </div>
 
-            
+
         </div>
 
     )
