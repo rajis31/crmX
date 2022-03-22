@@ -15,6 +15,7 @@ export default function Login() {
     const [loginError, setLoginError] = useState(false);
     const [usernameError, setUsernameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
+    const [cookieSessionID, setCookieSessionID] = useState();
 
     const navigate = useNavigate();
 
@@ -28,6 +29,15 @@ export default function Login() {
         }
     }
 
+    const handleLoginCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        const sessionid = parts.length === 2 ? 
+                                parts.pop().split(';').shift() : 
+                                 "";
+        setCookieSessionID(sessionid);
+    }
+
     const clearErrors = () => {
         setLoginError(false);
         setUsernameError(false);
@@ -37,12 +47,14 @@ export default function Login() {
 
     const handleLoginBtn = async (e) => {
         handleErrors();
+        handleLoginCookie();
 
         if(!usernameError && !passwordError){
             axios.post("http://localhost:3000/user/login",
             {
-                username: username,
-                password: password
+                username:   username,
+                password:   password,
+                session_id: setCookieSessionID
             })
             .then(response => {
                 console.log(response);

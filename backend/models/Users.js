@@ -14,7 +14,8 @@ class Users {
                 username varchar(255),
                 password varchar(255), 
                 date_created date,
-                img_path varchar(255)
+                img_path varchar(255),
+                session_id varchar(255)
             );
         `;
 
@@ -44,7 +45,10 @@ class Users {
          */
 
         let sql = `
-            SELECT username, password FROM ${this.tablename} 
+            SELECT username, 
+                   password, 
+                   session_id 
+            FROM ${this.tablename} 
             WHERE username = '${username}';
         `
         return db.execute(sql);
