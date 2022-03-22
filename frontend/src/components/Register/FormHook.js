@@ -7,10 +7,6 @@ const formHook = (inputValues, validate) => {
     const [errors, setErrors] =  useState({});
     const [success, setSuccess] = useState(false);
 
-    // useEffect(()=>{
-    //    console.log(inputs); 
-    // },[inputs])
-
     const navigate = useNavigate();
 
     const handleLogin = (e) =>{
@@ -29,9 +25,9 @@ const formHook = (inputValues, validate) => {
         if(!hasErrors){
             axios.post("http://localhost:3000/user/register",
             {
-                username: inputValues.username,
-                password: inputValues.password,
-                email:    inputValues.email
+                username: inputs.username,
+                password: inputs.password,
+                email:    inputs.email
             })
             .then(async (response) =>  {
                 setSuccess(true);
