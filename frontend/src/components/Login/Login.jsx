@@ -15,7 +15,6 @@ export default function Login() {
     const [loginError, setLoginError] = useState(false);
     const [usernameError, setUsernameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
-    const [cookieSessionID, setCookieSessionID] = useState();
 
     const navigate = useNavigate();
 
@@ -35,7 +34,6 @@ export default function Login() {
         const sessionid = parts.length === 2 ? 
                                 parts.pop().split(';').shift() : 
                                  "";
-        setCookieSessionID(sessionid);
     }
 
     const clearErrors = () => {
@@ -54,7 +52,6 @@ export default function Login() {
             {
                 username:   username,
                 password:   password,
-                session_id: setCookieSessionID
             })
             .then(response => {
                 console.log(response);
