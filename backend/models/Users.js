@@ -105,9 +105,22 @@ class Users {
 
         let sql = `
         UPDATE ${this.tablename}  
-            SET session_id = '${session_id}',
+            SET session_id = '${session_id}'
         WHERE username = '${username}';
         `
+        return db.execute(sql);
+    }
+
+    async check_session_id(session_id){
+        /**
+         * Check if session_id is in the db
+         */
+        let sql = `
+            SELECT session_id 
+            FROM ${this.tablename}  
+            WHERE session_id = '${session_id}';
+        `;
+
         return db.execute(sql);
     }
 
