@@ -10,7 +10,7 @@ exports.loginUser = async (req, res, next) => {
 
     let authorize = await user.authorize(username, password);
     if (authorize) {
-      let session_id = crypto.randomBytes(24).toString('base64');
+      let session_id = Crypto.randomBytes(24).toString('base64');
       user.updateSessionId(username, session_id);
       return res.status(200).json({ "msg": "User Found", "found": true, "session_id": session_id });
 
@@ -31,9 +31,8 @@ exports.registerUser = async (req, res, next) => {
     let password = req.body.password;
     let email = req.body.email;
 
-    console.log(username);
     let date_created = new Date().toJSON().slice(0, 10).replace(/-/g, '-');
-    let [result, _] = await user.insert_data(username, password, date_created, email);
+    let [result, _] = await user.insert_data(username, password, date_created, email,"");
 
     return res.status(200).json(result);
 
@@ -53,6 +52,20 @@ exports.updateUser = async (req, res, next) => {
     user.updateUser(updated_username, update_img_path, user_id);
     return res.status(200).json({ file: "Successfully updated user" });
 
+  } catch (err) {
+    next(err);
+  }
+
+}
+
+exports.checkSessionID = async (req, res, next) => {
+  try {
+    let user       = new Users();
+    let session_id = req.body.session_id;
+    
+    const [result, _] = user.check_session_id(session_id);
+    return res.status(200).json(result);
+    
   } catch (err) {
     next(err);
   }
