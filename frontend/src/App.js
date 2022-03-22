@@ -6,8 +6,26 @@ import Register from './components/Register/Register';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import Customer from './Pages/Customer/Customer';
 import Account from './Pages/Account/Account';
+import { getCookie } from './Helpers/Helpers';
+import axios from 'axios';
 
 export default function App(){
+  const checksessionID = () => {
+    const sessionID = getCookie("session_id");
+      axios.post("http://localhost:3000/user/check_session_id",
+      {
+          session_id: getCookie("session_id")
+      })
+      .then(response => {
+          console.log(response);
+      })
+      .catch(error => console.log(error));
+
+    console.log(sessionID);
+  }
+
+  checksessionID();
+
     return (
         <div>
           <div className='container'>
