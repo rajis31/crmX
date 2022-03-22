@@ -7,7 +7,7 @@ import { Button, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Alert from '@mui/material/Alert';
-
+import { getCookie, setCookie } from "../../Helpers/Helpers";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -28,12 +28,8 @@ export default function Login() {
         }
     }
 
-    const handleLoginCookie = (name) => {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        const sessionid = parts.length === 2 ? 
-                                parts.pop().split(';').shift() : 
-                                 "";
+    const handleLoginCookie = (name,value,days) => {
+        setCookie(name,value,days);
     }
 
     const clearErrors = () => {
@@ -45,19 +41,20 @@ export default function Login() {
 
     const handleLoginBtn = async (e) => {
         handleErrors();
-        handleLoginCookie();
 
-        if(!usernameError && !passwordError){
+        if (!usernameError && !passwordError) {
             axios.post("http://localhost:3000/user/login",
-            {
-                username:   username,
-                password:   password,
-            })
-            .then(response => {
-                console.log(response);
-                clearErrors();
-            })
-            .catch(error => setLoginError(true));
+                {
+                    username: username,
+                    password: password,
+                })
+                .then(response => {
+                    console.log(response);
+                    response.data.found ? handleLoginCookie("session_id",response.data?.session_id,30) : "";
+                    clearErrors();
+                    navigate("/");
+                })
+                .catch(error => setLoginError(true));
         }
     }
 
