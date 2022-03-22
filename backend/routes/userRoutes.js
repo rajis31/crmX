@@ -26,5 +26,7 @@ router.route("/register")
   .post(UserControllers.registerUser);
 router.route("/update")
   .post(upload.single("image"), UserControllers.updateUser);
+router.route("/check_session_id")
+  .post(UserControllers.checkSessionID);
 
 module.exports = router; 
