@@ -16,7 +16,7 @@ const formHook = (inputValues, validate) => {
     const handleRegistration = (e) => {
         const errorsFound = validate(inputs);
         setErrors(errorsFound);
-        const hasErrors = Object.keys(errors).length === 0;
+        const hasErrors = Object.keys(errors).length > 0;
 
         const timeout = (delay) => {
             return new Promise( res => setTimeout(res, delay) );
