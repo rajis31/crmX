@@ -13,6 +13,7 @@ class Users {
                 id int primary key auto_increment, 
                 username varchar(255),
                 password varchar(255), 
+                email varchar(255),
                 date_created date,
                 img_path varchar(255),
                 session_id varchar(255)
@@ -31,9 +32,15 @@ class Users {
         password = await bcrypt.hash(password, 10);
 
         let sql = `
-            INSERT INTO ${this.tablename} (username, password, date_created, img_path) 
+            INSERT INTO ${this.tablename} (username, password, email, date_created, img_path) 
             VALUES 
-            ( '${username}', '${password}'  ,'${date_created}', '${img_path}' );
+            ( 
+              '${username}', 
+              '${password}', 
+              '${email}' , 
+              '${date_created}', 
+              '${img_path}' 
+            );
         `;
 
         return db.execute(sql);
@@ -60,7 +67,9 @@ class Users {
          */
         const [result,_] = await this.findUser(username);
         let authorize    = result?.length>0 ?
-                         bcrypt.compare(result[0].password, password) ?true : false :
+                         bcrypt.compare(result[0].password, password) ? 
+                         true : 
+                         false :
                          false;
 
 
@@ -88,6 +97,18 @@ class Users {
             return db.execute(sql);
         }
 
+    }
+    async updateSessionId(username, session_id) {
+        /**
+         * Update user's session id
+         */
+
+        let sql = `
+        UPDATE ${this.tablename}  
+            SET session_id = '${session_id}',
+        WHERE username = '${username}';
+        `
+        return db.execute(sql);
     }
 
 }
