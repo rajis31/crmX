@@ -14,7 +14,7 @@ const validate = (inputs) =>{
         errors.passwordError = true;
     }
 
-    if(inputs.username !== inputs.confirm_password){
+    if(inputs.password !== inputs.confirm_password){
         errors.confirmpasswordError = true;
     }
 
