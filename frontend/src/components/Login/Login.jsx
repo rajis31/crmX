@@ -9,6 +9,7 @@ import axios from "axios";
 import Alert from '@mui/material/Alert';
 import { getCookie, setCookie } from "../../Helpers/Helpers";
 
+
 export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -59,12 +60,13 @@ export default function Login() {
     }
 
     const handleRegisterBtn = (e) => {
-        navigate("register");
+        navigate("/register");
     }
 
     const handleForgotBtn = (e) => {
-        navigate("forgot");
+        navigate("/forgot");
     }
+    
     return (
         <div className='login-form-container'>
             <h1>login</h1>
