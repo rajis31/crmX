@@ -8,6 +8,10 @@ class Users {
     }
 
     create_table() {
+         /**
+         * Create sql table
+         */
+
         let sql = `
             create table if not exists ${this.tablename} (
                 id int primary key auto_increment, 
@@ -65,21 +69,24 @@ class Users {
         /**
          * Authorize user based on username and password
          */
-        const [result,_] = await this.findUser(username);
-        let authorize    = result?.length>0 ?
-                         bcrypt.compare(result[0].password, password) ? 
-                         true : 
-                         false :
-                         false;
 
+        const [result, _] = await this.findUser(username);
+        let passwordComparison =  result[0]?.password ?
+                                  await bcrypt.compare(password, result[0]?.password) :
+                                  false;
 
-        return authorize;
+        if (result.length > 0 && passwordComparison) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     async updateUser(username, img_path, user_id) {
         /**
          * Update user
          */
+
         let [result, _] = await this.findUser(username);
         let user_found = false;
         result[0]?.length > 0 ? user_found = true : user_found = false;
@@ -111,7 +118,7 @@ class Users {
         return db.execute(sql);
     }
 
-    async check_session_id(session_id){
+    async check_session_id(session_id) {
         /**
          * Check if session_id is in the db
          */
