@@ -1,64 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
 import "./Login.css";
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GoogleIcon from '@mui/icons-material/Google';
 import { Button, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
 import Alert from '@mui/material/Alert';
-import { getCookie, setCookie } from "../../Helpers/Helpers";
+import formHook from './FormHook';
+import validate from './Validate';
 
 
 export default function Login() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [loginError, setLoginError] = useState(false);
-    const [usernameError, setUsernameError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
+    const inputValues = {username: "", password: ""};
+    const { handleInputChange, handleLogin,errors,success } = formHook(inputValues, validate);
 
     const navigate = useNavigate();
 
-    const handleErrors = () => {
-        if (username.length === 0) {
-            setUsernameError(true);
-        } else if (password.length === 0) {
-            setPasswordError(true);
-        } else {
-            clearErrors();
-        }
-    }
-
-    const handleLoginCookie = (name,value,days) => {
-        setCookie(name,value,days);
-    }
-
-    const clearErrors = () => {
-        setLoginError(false);
-        setUsernameError(false);
-        setLoginError(false);
-    }
-
-
-    const handleLoginBtn = async (e) => {
-        handleErrors();
-
-        if (!usernameError && !passwordError) {
-            axios.post("http://localhost:3000/user/login",
-                {
-                    username: username,
-                    password: password,
-                })
-                .then(response => {
-                    console.log(response);
-                    response.data.found ? handleLoginCookie("session_id",response.data?.session_id,30) : "";
-                    clearErrors();
-                    navigate("/");
-                })
-                .catch(error => setLoginError(true));
-        }
-    }
-
+  
     const handleRegisterBtn = (e) => {
         navigate("/register");
     }
@@ -76,10 +34,10 @@ export default function Login() {
                     placeholder='Type your Username'
                     type="text"
                     name='username'
-                    onChange={(e) => { setUsername(e.target.value) }}
+                    onChange={handleInputChange}
                 />
                 {
-                    usernameError ?
+                    errors.usernameError ?
                         <Alert severity="error" className='login-form__error-msg'>Please type your username in</Alert> :
                         <div></div>
                 }
@@ -88,16 +46,16 @@ export default function Login() {
                     placeholder='Type your Password'
                     type="password"
                     name='password'
-                    onChange={(e) => { setPassword(e.target.value) }}
+                    onChange={handleInputChange}
                 />
                 {
-                    passwordError ?
+                    errors.passwordError ?
                         <Alert severity="error" className='login-form__error-msg'>Please type your password in</Alert> :
                         <div></div>
                 }
 
                 {
-                    loginError ?
+                    success === false ?
                         <Alert severity="error" className='login-form__error-msg'>Could not login. Please try again</Alert> :
                         <div></div>
                 }
@@ -108,7 +66,7 @@ export default function Login() {
                 <Button
                     variant="contained"
                     color="secondary"
-                    onClick={handleLoginBtn}
+                    onClick={handleLogin}
                 >
                     Login Here
                 </Button>
