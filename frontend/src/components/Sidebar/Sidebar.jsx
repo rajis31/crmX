@@ -8,40 +8,41 @@ import NotesIcon from '@mui/icons-material/Notes';
 import HomeIcon from '@mui/icons-material/Home';
 import BlurLinearIcon from '@mui/icons-material/BlurLinear';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useNavigate } from 'react-router-dom';
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+  const handleRoute = (name) => {
+    navigate("/"+name);
+  }
   return (
     <div className="sidebar">
       <ul>
-      <li className='active'>
-          <HomeIcon className="sidebar__icon"/>
+        <li className='active' name="home" onClick={ e=> {handleRoute("")}}>
+          <HomeIcon className="sidebar__icon" />
           Home
         </li>
-        <li>
-          <PersonIcon className="sidebar__icon"/>
+        <li name="customer" onClick={ e=> {handleRoute("customer")}}>
+          <PersonIcon className="sidebar__icon" />
           Customers
         </li>
-        <li>
-         <NotesIcon className="sidebar__icon"/>
-          <Link to="/notes">
-            Notes
-          </Link>       
+        <li name="note" onClick={ e=> {handleRoute("notes")}}>
+          <NotesIcon className="sidebar__icon" />
+          Notes
         </li>
-        <li>
-          <BarChartIcon className="sidebar__icon"/>
+        <li name="report" onClick={ e=> {handleRoute("reports")}}>
+          <BarChartIcon className="sidebar__icon" />
           Reports
         </li>
-        <li className='sidebar__icon'>
+        <li className='sidebar__icon' name="account"  onClick={ e=> {handleRoute("account")}}>
           <AccountCircleIcon />
-          Profile
+          Account
         </li>
         <li className='sidebar__icon active'>
           <BlurLinearIcon />
         </li>
-      
-
       </ul>
- 
+
     </div>
   )
 }
