@@ -6,6 +6,7 @@ import Register from './components/Register/Register';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import Customer from './Pages/Customer/Customer';
 import Account from './Pages/Account/Account';
+import Forgot from './components/Forgot/Forgot';
 import { getCookie } from './Helpers/Helpers';
 import axios from 'axios';
 
@@ -35,6 +36,7 @@ export default function App(){
                       <Route path="/login" element={< Login />}/>
                       <Route path="/notes" element={<Notes />} />
                       <Route path="/register" element={<Register />} />
+                      <Route path="/forgot" element={<Forgot />} />
                       <Route path="/customer" element={<Customer />} />
                       <Route path="/Account" element={<Account />} />
                   </Routes>
