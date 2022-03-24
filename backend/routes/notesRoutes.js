@@ -6,10 +6,14 @@ const router  = express.Router();
 router.route("/")
       .get(NotesControllers.getAllNotes);
 
+router.route("/report")
+      .get(NotesControllers.generateNotesCsv);
+      
 router.route("/add")
       .post(NotesControllers.addNote);
 
 router.route("/delete")
       .post(NotesControllers.deleteNote);
+
 
 module.exports = router; 
