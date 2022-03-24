@@ -32,7 +32,7 @@ exports.registerUser = async (req, res, next) => {
     let email = req.body.email;
 
     let date_created = new Date().toJSON().slice(0, 10).replace(/-/g, '-');
-    let [result, _] = await user.insert_data(username, password, date_created, email,"");
+    let [result, _] = await user.insert_data(username, password, date_created, email, "");
 
     return res.status(200).json(result);
 
@@ -55,19 +55,46 @@ exports.updateUser = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-
 }
 
 exports.checkSessionID = async (req, res, next) => {
   try {
-    let user       = new Users();
+    let user = new Users();
     let session_id = req.body.session_id;
-    
+
     const [result, _] = user.check_session_id(session_id);
     return res.status(200).json(result);
-    
+
   } catch (err) {
     next(err);
   }
+}
 
+exports.checkUsername = async (req, res, next) => {
+  try {
+    let user = new Users();
+    let username = req.body.username;
+    let [result, _] = await user.findUser(username);
+    let found = result?.length === 0 ? false : true;
+    return res.status(200).json({ found: found });
+
+  } catch (err) {
+    console.log("Something went wrong with user query.");
+    next(err);
+  }
+}
+
+exports.forgotPassword = async (req, res, next) => {
+  try {
+    let user = new Users();
+    let username = req.body.username;
+    let password = req.body.password;
+
+    let [result, _] = await user.update_password(username,password);
+    return res.status(200).json(result);
+
+  } catch (err) {
+    console.log("Something went wrong with user query.");
+    next(err);
+  }
 }
