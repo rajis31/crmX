@@ -8,9 +8,9 @@ class Users {
     }
 
     create_table() {
-         /**
-         * Create sql table
-         */
+        /**
+        * Create sql table
+        */
 
         let sql = `
             create table if not exists ${this.tablename} (
@@ -71,9 +71,9 @@ class Users {
          */
 
         const [result, _] = await this.findUser(username);
-        let passwordComparison =  result[0]?.password ?
-                                  await bcrypt.compare(password, result[0]?.password) :
-                                  false;
+        let passwordComparison = result[0]?.password ?
+            await bcrypt.compare(password, result[0]?.password) :
+            false;
 
         if (result.length > 0 && passwordComparison) {
             return true;
@@ -126,6 +126,21 @@ class Users {
             SELECT session_id 
             FROM ${this.tablename}  
             WHERE session_id = '${session_id}';
+        `;
+
+        return db.execute(sql);
+    }
+
+    async update_password(username, password) {
+        /**
+         *  Update Password
+         */
+        
+        password = await bcrypt.hash(password, 10);
+        let sql = `
+             UPDATE ${this.tablename}
+             SET password = '${password}' 
+             WHERE username = '${username}';
         `;
 
         return db.execute(sql);
