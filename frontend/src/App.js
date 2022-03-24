@@ -7,6 +7,7 @@ import Dashboard from './Pages/Dashboard/Dashboard';
 import Customer from './Pages/Customer/Customer';
 import Account from './Pages/Account/Account';
 import Forgot from './components/Forgot/Forgot';
+import Reports from './Pages/Reports/Reports';
 import { getCookie } from './Helpers/Helpers';
 import axios from 'axios';
 
@@ -38,7 +39,8 @@ export default function App(){
                       <Route path="/register" element={<Register />} />
                       <Route path="/forgot" element={<Forgot />} />
                       <Route path="/customer" element={<Customer />} />
-                      <Route path="/Account" element={<Account />} />
+                      <Route path="/account" element={<Account />} />
+                      <Route path="/reports" element={<Reports />} />
                   </Routes>
                 </BrowserRouter>
           </div>
