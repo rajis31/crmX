@@ -28,5 +28,9 @@ router.route("/update")
   .post(upload.single("image"), UserControllers.updateUser);
 router.route("/check_session_id")
   .post(UserControllers.checkSessionID);
+router.route("/check_username")
+  .post(UserControllers.checkUsername);
+router.route("/forgot_password")
+  .post(UserControllers.forgotPassword);
 
 module.exports = router; 
