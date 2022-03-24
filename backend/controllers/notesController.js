@@ -1,42 +1,33 @@
-const Notes = require("../models/Notes");
+import React from 'react';
+import axios from "axios";
+import { Button } from '@mui/material';
+import Sidebar from '../../components/Sidebar/Sidebar';
 
-exports.getAllNotes = async (req, res, next) => {
-  try{
-      let NTS = new Notes();
-      let [notes,_] = await NTS.findAll("raji");
-      return res.status(200).json(notes);
-  } catch(err){
-    console.log(err);
-    next(err);
+function Reports() {
+  const handleReportGeneration = ()=>{
+    axios({
+        url: 'http://localhost:3000/notes/report',
+        method: 'GET',
+        responseType: 'blob', 
+    },{
+      params: {
+        username: "raji"
+      }
+    }).then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'file.csv'); 
+        document.body.appendChild(link);
+        link.click();
+    });
   }
+  return (
+    <div>
+        <Sidebar />
+        <Button onClick={handleReportGeneration}>Get all Notes</Button>
+    </div>
+  )
 }
 
-
-exports.addNote = async (req, res, next) => {
-  try{
-      let NTS          = new Notes();
-      console.log(req.body);
-      let title        = req.body.title; 
-      let body         = req.body.body; 
-      console.log("This is the title: "+title);
-      let date_changed = new Date().toJSON().slice(0,10).replace(/-/g,'-');
-      let [result,_] = await NTS.insert_data("raji",title,body,date_changed);
-      return res.status(200).json(result);
-  } catch(err){
-    console.log(err);
-    next(err);
-  }
-}
-
-
-
-exports.deleteNote = async (req, res, next) => {
-  try{
-      let NTS = new Notes();
-      let [result,_] = await NTS.delete(req.body.id);
-      return res.status(200).json(result);
-  } catch(err){
-    console.log(err);
-    next(err);
-  }
-}
+export default Reports
