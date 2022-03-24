@@ -1,33 +1,58 @@
-import React from 'react';
-import axios from "axios";
-import { Button } from '@mui/material';
-import Sidebar from '../../components/Sidebar/Sidebar';
+const Notes = require("../models/Notes");
+let json2csv = require('json2csv').parse;
 
-function Reports() {
-  const handleReportGeneration = ()=>{
-    axios({
-        url: 'http://localhost:3000/notes/report',
-        method: 'GET',
-        responseType: 'blob', 
-    },{
-      params: {
-        username: "raji"
-      }
-    }).then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'file.csv'); 
-        document.body.appendChild(link);
-        link.click();
-    });
+exports.getAllNotes = async (req, res, next) => {
+  try{
+      let notes     = new Notes();
+      let [result,_] = await notes.findAll("raji");
+      return res.status(200).json(result);
+  } catch(err){
+    console.log(err);
+    next(err);
   }
-  return (
-    <div>
-        <Sidebar />
-        <Button onClick={handleReportGeneration}>Get all Notes</Button>
-    </div>
-  )
 }
 
-export default Reports
+
+exports.addNote = async (req, res, next) => {
+  try{
+      let notes        = new Notes();
+      let title        = req.body.title; 
+      let body         = req.body.body; 
+      let date_changed = new Date().toJSON().slice(0,10).replace(/-/g,'-');
+      let [result,_] = await notes.insert_data("raji",title,body,date_changed);
+      return res.status(200).json(result);
+  } catch(err){
+    console.log(err);
+    next(err);
+  }
+}
+
+exports.deleteNote = async (req, res, next) => {
+  try{
+      let notes = new Notes();
+      let [result,_] = await notes.delete(req.body.id);
+      return res.status(200).json(result);
+  } catch(err){
+    console.log(err);
+    next(err);
+  }
+}
+
+exports.generateNotesCsv = async (req, res, next) => {
+  try{
+      let notes = new Notes();
+      console.log(req);
+      let username = req.body.username;
+      let [result,_] = await notes.findAll("raji");
+
+      let fields     = ["id","title","body","date_created"];
+      let fieldNames = ["ID","Title","Body","Date Created"];
+      let csv = json2csv(result,fields);
+
+      res.attachment('filename.csv');
+      return res.status(200).send(csv); 
+  } catch(err){
+    console.log(err);
+    next(err);
+  }
+}
