@@ -21,7 +21,6 @@ exports.getMetricStats = async (req, res, next) => {
             customer_delta: customer_delta[0]["diff"],
             notes_delta:notes_delta[0]["diff"]
         }
-        console.log(stats);
         res.status(200).json(stats);
 
     } catch(err){
@@ -35,8 +34,6 @@ exports.getMetricStats = async (req, res, next) => {
         const customers = new Customers();
         const username  = "raji";
         let [topCustomers, ]         = await customers.topX(username,5);
-
-        console.log(topCustomers);
         res.status(200).json(topCustomers);
 
     } catch(err){
@@ -52,8 +49,6 @@ exports.getMetricStats = async (req, res, next) => {
         const customers    = new Customers();
         const username     = "raji";
         let [cumulative, ] = await customers.cumulative(username);
-
-        console.log(cumulative);
         res.status(200).json(cumulative);
 
     } catch(err){
