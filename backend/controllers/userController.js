@@ -47,8 +47,8 @@ exports.updateUser = async (req, res, next) => {
     let user = new Users();
     let user_id = 1;
     let updated_username = req.body.username;
-    let update_img_path = "public/images" + user_id + ".jpg";
-
+    let update_img_path = "public/images/image-" + user_id + ".jpg";
+   
     user.updateUser(updated_username, update_img_path, user_id);
     return res.status(200).json({ file: "Successfully updated user" });
 
@@ -90,7 +90,20 @@ exports.forgotPassword = async (req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
 
-    let [result, _] = await user.update_password(username,password);
+    let [result, _] = await user.update_password(username, password);
+    return res.status(200).json(result);
+
+  } catch (err) {
+    console.log("Something went wrong with user query.");
+    next(err);
+  }
+}
+
+exports.retrieveImagePath = async (req, res, next) => {
+  try {
+    let user = new Users();
+    let username = req.body.username;
+    let [result, _] = await user.retrieve_image_path(username);
     return res.status(200).json(result);
 
   } catch (err) {
