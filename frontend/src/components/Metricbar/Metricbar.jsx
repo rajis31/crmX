@@ -12,8 +12,6 @@ function Metricbar() {
         setMetrics(result?.data);
     }, []);
 
-
-
     return (
         <div className='metric-bar'>
             <div className="metric">
