@@ -7,6 +7,7 @@ import { Box } from '@mui/material';
 import { Typography } from '@mui/material';
 import Table from '../../components/Table/Table';
 import axios from 'axios';
+import Sidebar from '../../components/Sidebar/Sidebar';
 
 function Customer() {
   const [dataRetrieved, setDataRetrieved] = useState([]);
@@ -78,6 +79,7 @@ function Customer() {
   return (
 
     <div>
+      <Sidebar />
       <Button
         onClick={handleAddCustomerModal}
         variant="contained"
