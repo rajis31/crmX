@@ -7,7 +7,7 @@ import { Snackbar } from '@mui/material';
 import axios from 'axios';
 
 function Account() {
-    const [username, setUsername] = useState("");
+    const [username, setUsername] = useState("test");
     const [img, setImg] = useState();
     const [imgSizeNotification, setimgSizeNotification] = useState(false);
 
@@ -72,6 +72,7 @@ function Account() {
                             placeholder='Username'
                             name='username'
                             onChange={(e) => { setUsername(e.target.value);  }}
+                            value={username}
                         />
                         <label htmlFor='profile_image'>
                             Profile Image
