@@ -32,5 +32,7 @@ router.route("/check_username")
   .post(UserControllers.checkUsername);
 router.route("/forgot_password")
   .post(UserControllers.forgotPassword);
+router.route("/retrieve_image_path")
+  .post(UserControllers.retrieveImagePath);
 
 module.exports = router; 
