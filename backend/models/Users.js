@@ -1,113 +1,165 @@
-const Users = require("../models/Users");
-const Crypto = require("crypto");
+const db = require("../config/db");
+const bcrypt = require("bcrypt");
 
-exports.loginUser = async (req, res, next) => {
-  try {
-    let user = new Users();
-    session = req.session;
-    let username = req.body.username;
-    let password = req.body.password;
+class Users {
 
-    let authorize = await user.authorize(username, password);
-    if (authorize) {
-      let session_id = Crypto.randomBytes(24).toString('base64');
-      user.updateSessionId(username, session_id);
-      return res.status(200).json({ "msg": "User Found", "found": true, "session_id": session_id });
-
-    } else {
-      return res.status(404).send("User not Found");
+    constructor() {
+        this.tablename = "users";
     }
 
-  } catch (err) {
-    console.log("Something went wrong with user query.");
-    next(err);
-  }
+    create_table() {
+        /**
+        * Create sql table
+        */
+
+        let sql = `
+            create table if not exists ${this.tablename} (
+                id int primary key auto_increment, 
+                username varchar(255),
+                password varchar(255), 
+                email varchar(255),
+                date_created date,
+                img_path varchar(255),
+                session_id varchar(255)
+            );
+        `;
+
+        return db.execute(sql);
+    }
+
+
+    async insert_data(username, password, date_created, email, img_path) {
+        /**
+         * Insert a new row into table
+         */
+
+        password = await bcrypt.hash(password, 10);
+
+        let sql = `
+            INSERT INTO ${this.tablename} (username, password, email, date_created, img_path) 
+            VALUES 
+            ( 
+              '${username}', 
+              '${password}', 
+              '${email}' , 
+              '${date_created}', 
+              '${img_path}' 
+            );
+        `;
+
+        return db.execute(sql);
+    }
+
+    async findUser(username) {
+        /**
+         * Retrieve Current user
+         */
+
+        let sql = `
+            SELECT username, 
+                   password, 
+                   session_id 
+            FROM ${this.tablename} 
+            WHERE username = '${username}';
+        `
+        return db.execute(sql);
+    }
+
+    async authorize(username, password) {
+        /**
+         * Authorize user based on username and password
+         */
+
+        const [result, _] = await this.findUser(username);
+        let passwordComparison = result[0]?.password ?
+            await bcrypt.compare(password, result[0]?.password) :
+            false;
+
+        if (result.length > 0 && passwordComparison) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    async updateUser(username, img_path, user_id) {
+        /**
+         * Update user
+         */
+        
+        let [result, _] = await this.findUser(username);
+        let user_found;
+        result?.length > 0 ? user_found = true : user_found = false;
+
+        if (user_found) {
+            let sql = `
+            UPDATE ${this.tablename}  
+               SET username = '${username}',
+                   img_path = '${img_path}'
+            WHERE id = '${user_id}';
+           `
+            return db.execute(sql);
+        } else {
+            let sql = `SELECT 1 from ${this.tablename};`;
+            return db.execute(sql);
+        }
+
+    }
+    async updateSessionId(username, session_id) {
+        /**
+         * Update user's session id
+         */
+
+        let sql = `
+        UPDATE ${this.tablename}  
+            SET session_id = '${session_id}'
+        WHERE username = '${username}';
+        `
+        return db.execute(sql);
+    }
+
+    async check_session_id(session_id) {
+        /**
+         * Check if session_id is in the db
+         */
+        let sql = `
+            SELECT session_id 
+            FROM ${this.tablename}  
+            WHERE session_id = '${session_id}';
+        `;
+
+        return db.execute(sql);
+    }
+
+    async update_password(username, password) {
+        /**
+         *  Update Password
+         */
+        
+        password = await bcrypt.hash(password, 10);
+        let sql = `
+             UPDATE ${this.tablename}
+             SET password = '${password}' 
+             WHERE username = '${username}';
+        `;
+
+        return db.execute(sql);
+    }
+
+    async retrieve_image_path(username) {
+        /**
+         *  Retrieve Image Path
+         */
+        
+        let sql = `
+            SELECT img_path 
+            FROM ${this.tablename}
+            WHERE username = '${username}';
+        `;
+
+        return db.execute(sql);
+    }
+
 }
 
-exports.registerUser = async (req, res, next) => {
-  try {
-    let user = new Users();
-    let username = req.body.username;
-    let password = req.body.password;
-    let email = req.body.email;
-
-    let date_created = new Date().toJSON().slice(0, 10).replace(/-/g, '-');
-    let [result, _] = await user.insert_data(username, password, date_created, email, "");
-
-    return res.status(200).json(result);
-
-  } catch (err) {
-    console.log("Something went wrong with user query.");
-    next(err);
-  }
-}
-
-exports.updateUser = async (req, res, next) => {
-  try {
-    let user = new Users();
-    let user_id = 1;
-    let updated_username = req.body.username;
-    let update_img_path = "public/images/image-" + user_id + ".jpg";
-   
-    user.updateUser(updated_username, update_img_path, user_id);
-    return res.status(200).json({ file: "Successfully updated user" });
-
-  } catch (err) {
-    next(err);
-  }
-}
-
-exports.checkSessionID = async (req, res, next) => {
-  try {
-    let user = new Users();
-    let session_id = req.body.session_id;
-
-    const [result, _] = user.check_session_id(session_id);
-    return res.status(200).json(result);
-
-  } catch (err) {
-    next(err);
-  }
-}
-
-exports.checkUsername = async (req, res, next) => {
-  try {
-    let user = new Users();
-    let username = req.body.username;
-    let [result, _] = await user.findUser(username);
-    let found = result?.length === 0 ? false : true;
-    return res.status(200).json({ found: found });
-
-  } catch (err) {
-    console.log("Something went wrong with user query.");
-    next(err);
-  }
-}
-
-exports.forgotPassword = async (req, res, next) => {
-  try {
-    let user = new Users();
-    let username = req.body.username;
-    let password = req.body.password;
-
-    let [result, _] = await user.update_password(username, password);
-    return res.status(200).json(result);
-
-  } catch (err) {
-    console.log("Something went wrong with user query.");
-    next(err);
-  }
-}
-
-exports.retrieveImagePath = async (req, res, next) => {
-  try {
-    let user = new Users();
-    let username = req.body.username;
-    let [result, _] = await user.retrieve_image_path(username);
-    return res.status(200).json(result);
-
-  } catch (err) {
-    console.log("Something went wrong with user query.");
-    next(err);
-  }
-}
+module.exports = Users;
