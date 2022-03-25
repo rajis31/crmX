@@ -57,3 +57,7 @@
     border-radius: 50%;
     cursor: pointer;
 }
+.topLogout{
+    cursor: pointer;
+    padding-left: 10px;
+}
