@@ -62,7 +62,7 @@ exports.checkSessionID = async (req, res, next) => {
     let user = new Users();
     let session_id = req.body.session_id;
 
-    const [result, _] = user.check_session_id(session_id);
+    const [result, _] = await user.check_session_id(session_id);
     return res.status(200).json(result);
 
   } catch (err) {
