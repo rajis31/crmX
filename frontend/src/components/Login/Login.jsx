@@ -13,7 +13,6 @@ import validate from './Validate';
 export default function Login() {
     const inputValues = {username: "", password: ""};
     const { handleInputChange, handleLogin,errors,success } = formHook(inputValues, validate);
-
     const navigate = useNavigate();
 
   
@@ -38,8 +37,13 @@ export default function Login() {
                 />
                 {
                     errors.usernameError ?
-                        <Alert severity="error" className='login-form__error-msg'>Please type your username in</Alert> :
-                        <div></div>
+                        <Alert 
+                            severity="error" 
+                            className='login-form__error-msg'
+                            >
+                            Please type your username in
+                        </Alert> :
+                        <></>
                 }
                 <label htmlFor="password">password</label>
                 <TextField
@@ -50,14 +54,24 @@ export default function Login() {
                 />
                 {
                     errors.passwordError ?
-                        <Alert severity="error" className='login-form__error-msg'>Please type your password in</Alert> :
-                        <div></div>
+                        <Alert 
+                            severity="error" 
+                            className='login-form__error-msg'
+                        >
+                            Please type your password in
+                        </Alert> :
+                        <></>
                 }
 
                 {
                     success === false ?
-                        <Alert severity="error" className='login-form__error-msg'>Could not login. Please try again</Alert> :
-                        <div></div>
+                        <Alert 
+                            severity="error" 
+                            className='login-form__error-msg'
+                        >
+                            Could not login. Please try again
+                        </Alert> :
+                        <></>
                 }
 
             </form>
