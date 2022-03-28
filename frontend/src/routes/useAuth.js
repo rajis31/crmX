@@ -1,13 +1,38 @@
+import { useState, useEffect } from "react";
 import { getCookie } from '../Helpers/Helpers';
 import axios from 'axios';
 
-  async function checksessionID() {
-    const session_id = getCookie("session_id");
-    const response =   await axios.post("http://localhost:3000/user/check_session_id", 
-                       { session_id: session_id});
-    
-    console.log(response);
-    return false;
-  }
+const useAuth = () => {
+  const [isAuth, setIsAuth] = useState(null);
 
-  export default checksessionID;
+  useEffect(() => {
+    const fetchData = async () => {
+      let session_id = getCookie("session_id");
+      if (!session_id) setIsAuth(false);
+
+      try {
+        const res = await axios.post("http://localhost:3000/user/check_session_id",
+          { session_id: session_id });
+
+        if (res?.data[0]?.session_id === session_id) {
+          setIsAuth(true);
+        } else {
+          setIsAuth(false);
+        }
+
+      } catch (e) {
+        console.log(e);
+        setIsAuth(false);
+      }
+
+    }
+
+    fetchData();
+  }, []);
+
+  return isAuth;
+}
+
+
+
+export default useAuth;
