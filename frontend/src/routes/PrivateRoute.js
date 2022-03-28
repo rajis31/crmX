@@ -1,11 +1,12 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
-import checksessionID from "./useAuth";
+import React, {useEffect,useState} from "react";
+import useAuth from "./useAuth";
+import {Route, Redirect} from "wouter";
 
-function PrivateRoute({ children }) {
-    const isAuthenticated = checksessionID();
-    console.log(isAuthenticated);
-    return isAuthenticated ? children : <Navigate to="/login" />;
-  }
+
+function PrivateRoute({ component, path }) {
+  const isAuth = useAuth();
+  const renderFunction = () => isAuth ? component :<Redirect to="/login" />;
+  return (<route path={path}>{ renderFunction() }</route>)
+}
 
 export default PrivateRoute;
