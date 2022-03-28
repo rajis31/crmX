@@ -1,26 +1,17 @@
-import { Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import routes from './Routes';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
+import PrivateRoute from './PrivateRoute';
 
 function ProtectedRoutes() {
     return (
-        <Routes>
-            <Suspense
-                fallback={<Box><CircularProgress /></Box>}
-            >
-                {routes.map(({ component: Component, path, exact }) => (
-                    <Route
-                        path={`/${path}`}
-                        key={path}
-                        exact={exact}
-                    >
-                        <Component />
-                    </Route>
-                ))}
-            </Suspense>
-        </Routes>
+            routes.map((route, idx) => (
+              <Route
+                key={idx}
+                path={route.path}
+                element={<PrivateRoute>{ route.component }</PrivateRoute>}
+                exact={route.exact}
+              />
+            ))
     )
 }
 

@@ -21,8 +21,6 @@ const formHook = (inputValues, validate) => {
         setErrors(errorsFound);
         const hasErrors = Object.keys(errorsFound).length > 0;
 
-
-
         const handleLoginCookie = (name, value, days) => {
             setCookie(name, value, days);
         }
