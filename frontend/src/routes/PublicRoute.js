@@ -1,11 +1,22 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
-import checksessionID from "./useAuth";
+import useAuth from "./useAuth";
+import {Route, Redirect} from "wouter";
 
-async function PublicRoute({ children }) {
-    console.log(await checksessionID()); 
-    let isAuthenticated = false;
-    return !isAuthenticated ? children : <Navigate to="/login" />;
+
+function PublicRoute({ children, path }) {
+
+  const isAuth = useAuth();
+
+  if (isAuth === null) {
+    return null;
   }
+
+  return !isAuth ? (
+    <Route path={path}>{children}</Route>
+  ) : (
+    <Redirect to="/login" />
+  );
+
+}
 
 export default PublicRoute;
