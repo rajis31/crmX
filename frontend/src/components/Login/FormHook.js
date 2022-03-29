@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 import { getCookie, setCookie } from "../../Helpers/Helpers";
 
 
@@ -8,13 +8,14 @@ const formHook = (inputValues, validate) => {
     const [inputs, setInputs] = useState(inputValues);
     const [errors, setErrors] = useState({});
     const [success, setSuccess] = useState();
+    const [location, setLocation] = useLocation();
+
 
     useEffect(() => {
         console.log(success);
     }, [success]);
 
 
-    const navigate = useNavigate();
 
     const handleLogin = (e) => {
         const errorsFound = validate(inputs);
@@ -37,7 +38,7 @@ const formHook = (inputValues, validate) => {
                         response.data?.found ? 
                                 handleLoginCookie("session_id", response.data?.session_id, 30) :
                                  "";
-                        navigate("/");
+                        setLocation("/");
                     } else {
                         setSuccess(false);
                     }
