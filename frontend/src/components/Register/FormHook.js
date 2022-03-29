@@ -1,16 +1,15 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 
 const formHook = (inputValues, validate) => {
     const [inputs, setInputs] =  useState(inputValues);
     const [errors, setErrors] =  useState({});
     const [success, setSuccess] = useState(false);
-
-    const navigate = useNavigate();
+    const [location, setLocation] = useLocation();
 
     const handleLogin = (e) =>{
-        navigate("../login");
+        setLocation("/login");
     }
 
     const handleRegistration = (e) => {
@@ -32,7 +31,7 @@ const formHook = (inputValues, validate) => {
             .then(async (response) =>  {
                 setSuccess(true);
                 await timeout(5000);
-                navigate("../login");
+                setLocation("/login");
             })
             .catch(error => setSuccess(false));
         }
