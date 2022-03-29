@@ -4,7 +4,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GoogleIcon from '@mui/icons-material/Google';
 import { Button, TextField } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'wouter';
 import Alert from '@mui/material/Alert';
 import formHook from './FormHook';
 import validate from './Validate';
@@ -13,15 +13,15 @@ import validate from './Validate';
 export default function Login() {
     const inputValues = {username: "", password: ""};
     const { handleInputChange, handleLogin,errors,success } = formHook(inputValues, validate);
-    const navigate = useNavigate();
+    const [location, setLocation] = useLocation();
 
   
     const handleRegisterBtn = (e) => {
-        navigate("/register");
+        setLocation("/register");
     }
 
     const handleForgotBtn = (e) => {
-        navigate("/forgot");
+        setLocation("/forgot");
     }
     
     return (
