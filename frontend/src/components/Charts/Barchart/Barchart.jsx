@@ -52,7 +52,7 @@ const Barchart = ({ xAxisDataKey, barDataKey, fill, data, title }) => {
                             {title}
                         </Typography>
                     </div>
-                    <ResponsiveContainer width="100%" height={300} className="barchart" >
+                    <ResponsiveContainer width={500} height={300} className="barchart" >
                         <BarChart
                             width={500}
                             height={300}
