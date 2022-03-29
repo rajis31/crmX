@@ -12,16 +12,16 @@ function Dashboard() {
 
   const [topCustomers, setTopCustomers] = useState([]);
   const [cumulativeCustomer, setCumulativeCustomer] = useState([]);
-  
 
-  useEffect(async ()=>{
-      let session_id = getCookie('session_id');
-      let data = await axios.get("http://localhost:3000/stats/get_top_customers/"+session_id);
-      setTopCustomers(data.data);
 
-      data = await axios.get("http://localhost:3000/stats/get_cumulative_customer_total/"+session_id);
-      setCumulativeCustomer(data.data);
-  },[]);
+  useEffect(async () => {
+    let session_id = getCookie('session_id');
+    let data = await axios.get("http://localhost:3000/stats/get_top_customers/" + session_id);
+    setTopCustomers(data.data);
+
+    data = await axios.get("http://localhost:3000/stats/get_cumulative_customer_total/" + session_id);
+    setCumulativeCustomer(data.data);
+  }, []);
 
 
 
@@ -32,6 +32,7 @@ function Dashboard() {
       <div>
         <Metricbar />
         <div className='charts'>
+          <div className='chart'>
             <Barchart
               xAxisDataKey="customer_name"
               barDataKey="profit"
@@ -39,18 +40,19 @@ function Dashboard() {
               data={topCustomers}
               title="Top 5 Customers"
             />
+          </div>
 
-            <Linechart 
-               data={cumulativeCustomer}
-               xAxisDataKey="day"
-               lineKey="cum_sum"
-               lineColor="#000"
-               title="Total Customers Added (Past 30 days)"
+          <div className='chart'>
+            <Linechart
+              data={cumulativeCustomer}
+              xAxisDataKey="day"
+              lineKey="cum_sum"
+              lineColor="#000"
+              title="Total Customers Added (Past 30 days)"
             />
-
-
+          </div>
         </div>
-       
+
       </div>
     </>
 
