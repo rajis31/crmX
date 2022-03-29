@@ -3,7 +3,7 @@ const CustomersController = require("../controllers/customersController");
 const router  = express.Router();
 
 // Customer Routes  
-router.route("/")
+router.route("/:session_id")
       .get(CustomersController.findAllCustomers);
 
 router.route("/create")
