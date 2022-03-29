@@ -67,14 +67,13 @@ class Customers {
         return db.execute(sql);
     }
 
-    countCustomrs(username) {
+    countCustomers(username) {
         /**
          * Find the number of customers a user has created
          */
         let sql = `SELECT COUNT(*) as num_customers
                    FROM ${this.tablename} 
                    WHERE username = '${username}';`;
-
         return db.execute(sql);
     }
 
