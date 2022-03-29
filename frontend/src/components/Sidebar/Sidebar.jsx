@@ -22,7 +22,7 @@ export default function Sidebar() {
           <HomeIcon className="sidebar__icon" />
           Home
         </li>
-        <li name="customer" onClick={ e=> {handleRoute("customer")}}>
+        <li name="customers" onClick={ e=> {handleRoute("customers")}}>
           <PersonIcon className="sidebar__icon" />
           Customers
         </li>

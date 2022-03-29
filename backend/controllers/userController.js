@@ -99,6 +99,11 @@ exports.forgotPassword = async (req, res, next) => {
   }
 }
 
+exports.logoutUser = async (req, res, next) => {
+  
+}
+
+
 exports.retrieveImagePath = async (req, res, next) => {
   try {
     let user = new Users();

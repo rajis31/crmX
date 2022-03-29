@@ -2,9 +2,15 @@ import React, {useEffect, useState} from "react";
 import "./Topbar.css";
 import LogoutIcon from '@mui/icons-material/Logout';
 import axios from "axios";
+import { useLocation } from "wouter";
+import { getCookie, deleteCookie } from "../../Helpers/Helpers";
+
 
 export default function Topbar() {
+
+  const [location, setLocation] = useLocation();
   const [img, setImg] = useState("");
+
   useEffect(()=>{
     axios.post("http://localhost:3000/user/retrieve_image_path",
     {
@@ -19,6 +25,10 @@ export default function Topbar() {
     .catch(error => { console.log(error);  });
   },[]);
 
+  const handleLogout = (e) => {
+      
+  }
+
   return (
     <div className='topbar'>
         <div className='topbarWrapper'>
@@ -27,7 +37,7 @@ export default function Topbar() {
             </div>
             <div className="topRight">
                 <img  src={ img }  alt="" className="topAvatar" />
-                <LogoutIcon  className="topLogout" />
+                <LogoutIcon  className="topLogout" onClick={handleLogout} />
             </div>
         </div>
     </div>
