@@ -160,6 +160,21 @@ class Users {
         return db.execute(sql);
     }
 
+    
+    async logout(session_id) {
+        /**
+         *  Delete Session ID from DB
+         */
+        
+        let sql = `
+            UPDATE ${this.tablename} 
+            SET session_id = null 
+            WHERE session_id = '${session_id}';
+        `;
+
+        return db.execute(sql);
+    }
+
 }
 
 module.exports = Users;
