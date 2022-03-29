@@ -2,20 +2,22 @@ import React, { useState } from 'react';
 
 import "./Forgot.css";
 import { Button, TextField } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import axios from 'axios';
+import { useLocation } from "wouter";
+
 
 function Forgot() {
 
-    const navigate = useNavigate();
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [showPassword, setShowPassword] = useState("");
     const [success, setSuccess] = useState();
+    const [location, setLocation] = useLocation();
+
 
     const handleLogin = (e) => {
-        navigate("/login");
+        setLocation("/login");
     }
 
     const handleUsername = (e) => {
@@ -39,7 +41,7 @@ function Forgot() {
             })
             .then(response => {
                 if (response.status === 200) {
-                   navigate("/login");
+                   setLocation("/login");
                 }
             })
             .catch(error => { setSuccess(false) });
