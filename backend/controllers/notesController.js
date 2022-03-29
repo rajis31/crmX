@@ -1,10 +1,16 @@
 const Notes = require("../models/Notes");
+const Users = require("../models/Users");
 let json2csv = require('json2csv').parse;
 
 exports.getAllNotes = async (req, res, next) => {
   try{
-      let notes     = new Notes();
-      let [result,_] = await notes.findAll("raji");
+      let notes          = new Notes();
+      let user           = new Users();
+
+      let session_id     = req.params.session_id;
+      let [result,_]     = await user.identify_user(session_id);
+      let username       = result[0]?.username;
+      [result,_]         = await notes.findAll(username);
       return res.status(200).json(result);
   } catch(err){
     console.log(err);
@@ -15,11 +21,17 @@ exports.getAllNotes = async (req, res, next) => {
 
 exports.addNote = async (req, res, next) => {
   try{
-      let notes        = new Notes();
-      let title        = req.body.title; 
-      let body         = req.body.body; 
+      let notes          = new Notes();
+      let user           = new Users();
+      
+      let title          = req.body.title; 
+      let body           = req.body.body; 
+      let session_id     = req.body.session_id;
+      let [result,_]     = await user.identify_user(session_id);
+      let username       = result[0]?.username;
+      
       let date_changed = new Date().toJSON().slice(0,10).replace(/-/g,'-');
-      let [result,_] = await notes.insert_data("raji",title,body,date_changed);
+      [result,_]       = await notes.insert_data(username,title,body,date_changed);
       return res.status(200).json(result);
   } catch(err){
     console.log(err);
@@ -29,8 +41,13 @@ exports.addNote = async (req, res, next) => {
 
 exports.deleteNote = async (req, res, next) => {
   try{
-      let notes = new Notes();
-      let [result,_] = await notes.delete(req.body.id);
+      let notes          = new Notes();
+      let user           = new Users();
+
+      let session_id     = req.body.session_id;
+      let [result,_]     = await user.identify_user(session_id);
+      let username       = result[0]?.username;
+      [result,_]         = username ? await notes.delete(req.body.id):"";
       return res.status(200).json(result);
   } catch(err){
     console.log(err);
@@ -41,15 +58,16 @@ exports.deleteNote = async (req, res, next) => {
 exports.generateNotesCsv = async (req, res, next) => {
   try{
       let notes = new Notes();
-      console.log(req);
-      let username = req.body.username;
-      let [result,_] = await notes.findAll("raji");
+      let session_id     = req.body.session_id;
+      let [result,_]     = await user.identify_user(session_id);
+      let username       = result[0]?.username;
+      [result,_]         = await notes.findAll(username);
 
       let fields     = ["id","title","body","date_created"];
       let fieldNames = ["ID","Title","Body","Date Created"];
       let csv = json2csv(result,fields);
 
-      res.attachment('filename.csv');
+      res.attachment('Notes.csv');
       return res.status(200).send(csv); 
   } catch(err){
     console.log(err);
