@@ -13,7 +13,7 @@ const ReportsPage = lazy(() => import('./Pages/Reports/Reports'));
 import PrivateRoute from './routes/PrivateRoute';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-
+import "./style.css";
 
 export default function App() {
 
