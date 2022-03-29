@@ -34,5 +34,7 @@ router.route("/forgot_password")
   .post(UserControllers.forgotPassword);
 router.route("/retrieve_image_path")
   .post(UserControllers.retrieveImagePath);
+router.route("/logout")
+  .post(UserControllers.logout);
 
 module.exports = router; 
