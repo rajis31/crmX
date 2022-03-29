@@ -1,42 +1,52 @@
 const Customers = require("../models/Customers");
+const Users = require("../models/Users");
 
 
 exports.findAllCustomers = async (req, res, next) => {
-    try{
-        let customer       = new Customers();
-        let username       = "raji"; 
-        let [result,_] = await customer.findAll(username);
-        return res.status(200).json(result);
-    } catch(err){
-      console.log(err);
-      next(err);
-    }
+  try {
+    const customer = new Customers();
+    const user = new Users();
+
+    let session_id = req.params.session_id;
+    let [result, _] = await user.identify_user(session_id);
+    let username = result[0]?.username;
+
+    [result, _] = await customer.findAll(username);
+    return res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
+}
 
 
 exports.addCustomer = async (req, res, next) => {
-    try{
+  try {
 
-        let customer       = new Customers();
-        let username       = "raji"; 
-        let customer_name  = req.body.customer_name;
-        let dob            = req.body.dob;
-        let email          = req.body.email;
-        let profit         = req.body.profit; 
-        let acq_cost       = req.body.acq_cost; 
-        let date_created   = new Date().toJSON().slice(0,10).replace(/-/g,'-');
+    let customer = new Customers();
+    let user = new Users();
+    let session_id = req.body.session_id;
 
-        let [result,_] = await customer.insert_data(
-                                    username,
-                                    customer_name,
-                                    dob, 
-                                    email,
-                                    profit,
-                                    acq_cost, 
-                                    date_created);
-        return res.status(200).json(result);
-    } catch(err){
-      console.log(err);
-      next(err);
-    }
+    let [result, _] = await user.identify_user(session_id);
+    let username = result[0]?.username;
+    let customer_name = req.body.customer_name;
+    let dob = req.body.dob;
+    let email = req.body.email;
+    let profit = req.body.profit;
+    let acq_cost = req.body.acq_cost;
+    let date_created = new Date().toJSON().slice(0, 10).replace(/-/g, '-');
+
+    [result, _] = await customer.insert_data(
+      username,
+      customer_name,
+      dob,
+      email,
+      profit,
+      acq_cost,
+      date_created);
+    return res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
+}
