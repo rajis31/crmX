@@ -1,19 +1,19 @@
 import React from 'react';
 import "./Sidebar.css";
 
-import { Link } from 'react-router-dom';
 import PersonIcon from '@mui/icons-material/Person';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import NotesIcon from '@mui/icons-material/Notes';
 import HomeIcon from '@mui/icons-material/Home';
 import BlurLinearIcon from '@mui/icons-material/BlurLinear';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'wouter';
 
 export default function Sidebar() {
-  const navigate = useNavigate();
+  const [location, setLocation] = useLocation();
+
   const handleRoute = (name) => {
-    navigate("/"+name);
+    setLocation("/"+name);
   }
   return (
     <div className="sidebar">
