@@ -17,7 +17,6 @@ export default function Topbar() {
         username: "test"
     })
     .then(response => {
-        console.log(response);
         if (response.status === 200) {
           setImg("../../../"+response.data[0]?.img_path);
         }
@@ -26,7 +25,14 @@ export default function Topbar() {
   },[]);
 
   const handleLogout = (e) => {
-      
+    let session_id = getCookie("session_id");
+    axios.post("http://localhost:3000/user/logout",{ session_id: session_id })
+         .then(response => {
+              if(response.status === 200){
+                 deleteCookie("session_id");
+                 setLocation("/login");
+              }
+         })
   }
 
   return (
