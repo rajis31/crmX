@@ -99,8 +99,17 @@ exports.forgotPassword = async (req, res, next) => {
   }
 }
 
-exports.logoutUser = async (req, res, next) => {
-  
+exports.logout = async (req, res, next) => {
+
+  try{
+    let session_id = req.body.session_id;
+    let user = new Users();
+    let [result, _] = await  user.logout(session_id);
+    return res.status(200).json(result);
+  } catch (err){
+    console.log("Something went wrong with user query.");
+    next(err);
+  }
 }
 
 
