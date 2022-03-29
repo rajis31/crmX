@@ -175,6 +175,20 @@ class Users {
         return db.execute(sql);
     }
 
+    async identify_user(session_id) {
+        /**
+         *  
+         */
+        
+        let sql = `
+            SELECT username 
+            FROM ${this.tablename}
+            WHERE session_id = '${session_id}';
+        `;
+
+        return db.execute(sql);
+    }
+
 }
 
 module.exports = Users;
