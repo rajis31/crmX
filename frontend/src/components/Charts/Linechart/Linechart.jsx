@@ -24,7 +24,7 @@ const Linechart = ({ data, xAxisDataKey, lineKey, lineColor, title }) => {
                         {title}
                     </Typography>
                 </div>
-                <ResponsiveContainer width={540} height={400} className="linechart">
+                <ResponsiveContainer width={500} height={350} className="linechart">
                     <LineChart
                         width={500}
                         height={300}
@@ -57,7 +57,7 @@ const Linechart = ({ data, xAxisDataKey, lineKey, lineColor, title }) => {
                             {title}
                         </Typography>
                     </div>
-                    <ResponsiveContainer width={500} height={400} className="linechart">
+                    <ResponsiveContainer width={500} height={350} className="linechart">
                         <LineChart
                             width={500}
                             height={300}
