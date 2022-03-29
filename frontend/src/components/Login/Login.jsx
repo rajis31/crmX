@@ -1,8 +1,5 @@
 import React from 'react'
 import "./Login.css";
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import GoogleIcon from '@mui/icons-material/Google';
 import { Button, TextField } from '@mui/material';
 import { useLocation } from 'wouter';
 import Alert from '@mui/material/Alert';
@@ -94,10 +91,8 @@ export default function Login() {
                 </Button>
             </div>
 
-            <div className="social">
-                <FacebookIcon className='social-icon' />
-                <TwitterIcon className='social-icon' />
-                <GoogleIcon className='social-icon' />
+            <div className='login_tag'>
+                <a className='login_tag_link' href='https://www.dev-top.com'>Created by Raj Solanki <br/>(https//www.dev-top.com)</a>
             </div>
         </div>
 
