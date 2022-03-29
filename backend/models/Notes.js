@@ -82,7 +82,7 @@ class Notes{
          */
 
          let sql =  `
-            SELECT count(*) as num_notes FROM 
+            SELECT IFNULL(count(*),0) as num_notes FROM 
             ${this.tablename} 
             WHERE username = '${username}'; 
         `
@@ -104,13 +104,13 @@ class Notes{
                     WHEN DATEDIFF(CURDATE(), date_created) = ${days} THEN 1
                     ELSE 0
                 END) AS num_notes_yesterday,
-                SUM(CASE
+                IFNULL(SUM(CASE
                     WHEN DATEDIFF(CURDATE(), date_created) = 0 THEN 1
                     ELSE 0
                 END) - SUM(CASE
                     WHEN DATEDIFF(CURDATE(), date_created) = ${days} THEN 1
                     ELSE 0
-                END) AS diff
+                END),0) AS diff
             FROM
                 ${this.tablename}
             WHERE
