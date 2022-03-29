@@ -4,27 +4,27 @@ const routes = [
   {
     path: '/',
     component: lazy(() => import('../Pages/Dashboard/Dashboard')),
-    exact: true
+    type: "private"
   },
   {
-    path: 'notes',
+    path: '/notes',
     component: lazy(() => import('../Pages/Notes/Notes')),
-    exact: true
+    type: "private"
   },
   {
-    path: 'customer',
+    path: '/customer',
     component: lazy(() => import('../Pages/Customer/Customer')),
-    exact: true
+    type: "private"
   },
   {
-    path: 'account',
+    path: '/account',
     component: lazy(() => import('../Pages/Account/Account')),
-    exact: true
+    type: "private"
   },
   {
-    path: 'reports',
+    path: '/reports',
     component: lazy(() => import('../Pages/Reports/Reports')),
-    exact: true
+    type: "private"
   }
 ];
 
