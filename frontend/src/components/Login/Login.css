@@ -53,32 +53,19 @@ h1 {
   margin-top: 3rem;
 }
 
-.social {
+.login_tag{
+  background-color: #000;
+  position: absolute;
+  bottom: 20px;
+  right: 25px;
+  padding: 20px;
   text-align: center;
-  margin-top: 1rem;
+  border-radius: 5px;
 }
-
-.social-icon {
-  margin: 0 .5rem;
-  padding: 1rem;
-  border-radius: 50%;
-  cursor: pointer;
-  width: 1rem;
-}
-
-.social .social-icon:first-child {
-  background: #4267B2;
+.login_tag a {
   color: #fff;
-}
-
-.social .social-icon:nth-child(2) {
-  background: #1DA1F2;
-  color: #fff;
-}
-
-.social .social-icon:last-child {
-  background: #DB4437;
-  color: #fff;
+  font-size: 13px;
+  text-decoration: none;
 }
 
 .login-form__error-msg{
