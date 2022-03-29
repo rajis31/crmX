@@ -3,7 +3,7 @@ import useAuth from "./useAuth";
 import {Route, Redirect} from "wouter";
 
 
-function PublicRoute({ children, path }) {
+function PublicRoute({ component, path }) {
 
   const isAuth = useAuth();
 
@@ -11,8 +11,10 @@ function PublicRoute({ children, path }) {
     return null;
   }
 
+  console.log("Public Route isAuth: "+isAuth);
+
   return !isAuth ? (
-    <Route path={path}>{children}</Route>
+    <Route path={path}>{component}</Route>
   ) : (
     <Redirect to="/login" />
   );

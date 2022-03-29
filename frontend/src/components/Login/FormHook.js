@@ -22,7 +22,7 @@ const formHook = (inputValues, validate) => {
         setErrors(errorsFound);
         const hasErrors = Object.keys(errorsFound).length > 0;
 
-        const handleLoginCookie = (name, value, days) => {
+        const handleLoginCookie = async (name, value, days) => {
             setCookie(name, value, days);
         }
 
@@ -32,13 +32,16 @@ const formHook = (inputValues, validate) => {
                     username: inputs.username,
                     password: inputs.password,
                 })
-                .then(response => {
-                    console.log(response);
+                .then(async (response) => {
+
                     if (response.status === 200) {
-                        response.data?.found ? 
-                                handleLoginCookie("session_id", response.data?.session_id, 30) :
-                                 "";
-                        setLocation("/");
+                        if(response.data?.found ){
+                            await handleLoginCookie("session_id", response.data?.session_id, 30);
+
+                            let protocal = window.location.protocol;
+                            let hostname = window.location.host;
+                            window.location.href=protocal+"//"+hostname+"/";
+                        }
                     } else {
                         setSuccess(false);
                     }

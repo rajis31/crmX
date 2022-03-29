@@ -5,7 +5,6 @@ const ForgotPage = lazy(() => import('./components/Forgot/Forgot'));
 const DashPage = lazy(() => import('./Pages/Dashboard/Dashboard'));
 import routes from "./routes/Routes";
 
-import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -17,10 +16,8 @@ export default function App() {
     <div>
       <div className='container'>
         <Suspense fallback={<Box><CircularProgress /></Box>}>
-          <PublicRoute path="/login"><LoginPage /></PublicRoute>
-          <PublicRoute path="/register"><RegisterPage /></PublicRoute>
-          <PublicRoute path="/forgot"><ForgotPage /></PublicRoute>
-          <PrivateRoute path="/dash" component={DashPage}  />
+          <PrivateRoute path="/login" type="public" > <LoginPage /> </PrivateRoute>
+          <PrivateRoute path="/" type="private" > <DashPage /> </PrivateRoute>
         </Suspense>
       </div>
     </div>
