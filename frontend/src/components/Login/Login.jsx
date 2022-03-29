@@ -1,100 +1,123 @@
-import React from 'react'
-import "./Login.css";
-import { Button, TextField } from '@mui/material';
-import { useLocation } from 'wouter';
-import Alert from '@mui/material/Alert';
-import formHook from './FormHook';
-import validate from './Validate';
+import React, { useState, useEffect } from 'react'
+import "./Customer.css";
+import AddCustomerModal from '../../components/AddCustomerModal/AddCustomerModal';
+import { Button } from '@mui/material';
+import { Modal } from '@mui/material';
+import { Box } from '@mui/material';
+import { Typography } from '@mui/material';
+import Table from '../../components/Table/Table';
+import axios from 'axios';
+import Sidebar from '../../components/Sidebar/Sidebar';
+import { getCookie } from '../../Helpers/Helpers';
 
+function Customer() {
+  const [dataRetrieved, setDataRetrieved] = useState([]);
+  const [columns, setColumns] = useState([]);
+  const [showCustomerModal, setShowCustomerModal] = useState(false);
+  const [showAddCustomerNote, setShowAddCustomerNote] = useState(false);
 
-export default function Login() {
-    const inputValues = {username: "", password: ""};
-    const { handleInputChange, handleLogin,errors,success } = formHook(inputValues, validate);
-    const [location, setLocation] = useLocation();
+  const [data, setData] = useState({
+    customer_name: "",
+    dob: "",
+    email: "",
+    profit: "",
+    acquisition_cost: ""
+  });
 
-  
-    const handleRegisterBtn = (e) => {
-        setLocation("/register");
+  useEffect(() => {
+    async function fetchData() {
+      let session_id = getCookie("session_id");
+      let request = await axios.get("http://localhost:3000/customers/"+session_id);
+      setDataRetrieved(request.data);
+
+      request.data?.length > 0 ? setColumns(Object
+        .keys(request.data[0])
+        .map(x => x.toUpperCase().replace(/_/g, " ")))
+        : setColumns(["Customer Name",
+          "DOB",
+          "Email",
+          "Profit",
+          "Acquisiton Cost",
+          "Date Created"]);
     }
 
-    const handleForgotBtn = (e) => {
-        setLocation("/forgot");
-    }
-    
-    return (
-        <div className='login-form-container'>
-            <h1>login</h1>
-            <form>
-                <label htmlFor="username">username</label>
-                <TextField
-                    placeholder='Type your Username'
-                    type="text"
-                    name='username'
-                    onChange={handleInputChange}
-                />
-                {
-                    errors.usernameError ?
-                        <Alert 
-                            severity="error" 
-                            className='login-form__error-msg'
-                            >
-                            Please type your username in
-                        </Alert> :
-                        <></>
-                }
-                <label htmlFor="password">password</label>
-                <TextField
-                    placeholder='Type your Password'
-                    type="password"
-                    name='password'
-                    onChange={handleInputChange}
-                />
-                {
-                    errors.passwordError ?
-                        <Alert 
-                            severity="error" 
-                            className='login-form__error-msg'
-                        >
-                            Please type your password in
-                        </Alert> :
-                        <></>
-                }
+    fetchData();
+  }, []);
 
-                {
-                    success === false ?
-                        <Alert 
-                            severity="error" 
-                            className='login-form__error-msg'
-                        >
-                            Could not login. Please try again
-                        </Alert> :
-                        <></>
-                }
+  const handleAddCustomerModal = (e) => {
+    setShowCustomerModal(true);
+  }
 
-            </form>
-            <p className="forgot" onClick={() => { handleForgotBtn() }}>forgot password?</p>
-            <div className='login-form__btn-group'>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleLogin}
-                >
-                    Login Here
-                </Button>
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    fontSize: 14,
+    bgcolor: '#fff',
+    color: "#000",
+    border: '2px solid #fff',
+    boxShadow: 24,
+    p: 4,
+  };
 
-                <Button
-                    variant="contained"
-                    color="success"
-                    onClick={handleRegisterBtn}
-                >
-                    Register Here
-                </Button>
-            </div>
+  const handleAddCustomer = (e) => {
+    let session_id = getCookie("session_id");
+    axios.post("http://localhost:3000/customers/create",
+      {
+        customer_name: data.customer_name,
+        dob: data.dob,
+        email: data.email,
+        profit: data.profit,
+        acq_cost: data.acquisition_cost,
+        session_id: session_id
+      })
+      .then(response => {
+        setShowCustomerModal(false);
+        setShowAddCustomerNote(true);
+      })
+      .catch(error => console.log(error));
+  }
 
-            <div className='login_tag'>
-                <a className='login_tag_link' href='https://www.dev-top.com'>Created by Raj Solanki <br/>(https//www.dev-top.com)</a>
-            </div>
-        </div>
+  return (
 
-    )
+    <div>
+      <Sidebar />
+      <Button
+        onClick={handleAddCustomerModal}
+        variant="contained"
+      >
+        Add Customer
+      </Button>
+
+      <AddCustomerModal
+        showForm={showCustomerModal}
+        setShowForm={setShowCustomerModal}
+        handleAddCustomer={handleAddCustomer}
+        states={setData}
+      />
+
+      <Table
+        data={dataRetrieved}
+        rowsPerPage={5}
+        columns={columns}
+      />
+
+      <Modal open={showAddCustomerNote} className="add-customer-notification">
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Notification
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Customer Has Been Added
+          </Typography>
+          <Button onClick={() => { window.location.reload() }}>Close</Button>
+        </Box>
+      </Modal>
+
+    </div>
+  )
 }
+
+export default Customer
