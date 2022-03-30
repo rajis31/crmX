@@ -53,11 +53,12 @@ exports.addCustomer = async (req, res, next) => {
 
 exports.generateCustomerCsv = async (req, res, next) => {
   try{
-      let notes = new Notes();
-      let session_id     = req.body.session_id;
+      let customer       = new Customers();
+      let user           = new Users();
+      let session_id     = req.params.session_id;
       let [result,_]     = await user.identify_user(session_id);
       let username       = result[0]?.username;
-      [result,_]         = await notes.findAll(username);
+      [result,_]         = await customer.findAll(username);
 
       let fields     = ["id","title","body","date_created"];
       let csv = json2csv(result,fields);
