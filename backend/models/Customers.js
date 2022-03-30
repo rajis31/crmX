@@ -141,7 +141,7 @@ class Customers {
 
     cumulative(username){
         let sql = `
-            select p.day, p.cnt, sum(p.cnt) over (order by day) as cum_sum  from 
+            select p.day, p.cnt, sum(p.cnt) over (order by day) as 'Cumulative Total'  from 
             ( SELECT 
                 DAY(date_created) AS day, 
                 COUNT(id) as cnt
