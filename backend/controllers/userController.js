@@ -44,12 +44,14 @@ exports.registerUser = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   try {
-    let user = new Users();
-    let user_id = 1;
-    let updated_username = req.body.username;
-    let update_img_path = "public/images/image-" + user_id + ".jpg";
+
+    let user            = new Users();
+    let session_id      = req.body.session_id;
+    let [result,_]      = await user.identify_user(session_id);
+    let username        = result[0]?.username;
+    let update_img_path = "public/images/image-" + username + ".jpg";
    
-    user.updateUser(updated_username, update_img_path, user_id);
+    user.updateUser(session_id, update_img_path);
     return res.status(200).json({ file: "Successfully updated user" });
 
   } catch (err) {
