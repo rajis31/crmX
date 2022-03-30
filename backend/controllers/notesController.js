@@ -64,7 +64,6 @@ exports.generateNotesCsv = async (req, res, next) => {
       [result,_]         = await notes.findAll(username);
 
       let fields     = ["id","title","body","date_created"];
-      let fieldNames = ["ID","Title","Body","Date Created"];
       let csv = json2csv(result,fields);
 
       res.attachment('Notes.csv');

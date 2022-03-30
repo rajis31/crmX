@@ -50,3 +50,22 @@ exports.addCustomer = async (req, res, next) => {
     next(err);
   }
 }
+
+exports.generateCustomerCsv = async (req, res, next) => {
+  try{
+      let notes = new Notes();
+      let session_id     = req.body.session_id;
+      let [result,_]     = await user.identify_user(session_id);
+      let username       = result[0]?.username;
+      [result,_]         = await notes.findAll(username);
+
+      let fields     = ["id","title","body","date_created"];
+      let csv = json2csv(result,fields);
+
+      res.attachment('Notes.csv');
+      return res.status(200).send(csv); 
+  } catch(err){
+    console.log(err);
+    next(err);
+  }
+}

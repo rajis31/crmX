@@ -9,4 +9,7 @@ router.route("/:session_id")
 router.route("/create")
       .post(CustomersController.addCustomer);
 
+router.route("/report/:session_id")
+      .get(CustomersController.generateCustomerCsv);
+
 module.exports = router; 

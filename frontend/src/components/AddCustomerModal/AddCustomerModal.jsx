@@ -8,7 +8,7 @@ import Modal from '@mui/material/Modal';
 
 const AddCustomerModal = ({ showForm, setShowForm, handleAddCustomer, states }) => {
     return (
-        <Modal open={showForm} className="add-customer__modal">
+        <Modal open={showForm} className="add-customer-modal">
             <Box>
                 <Typography
                     align='center'
@@ -65,6 +65,7 @@ const AddCustomerModal = ({ showForm, setShowForm, handleAddCustomer, states }) 
                          onChange={ (e) => {
                             states( (prevState) => ({...prevState, [e.target.name]: e.target.value}))}
                         }
+                        style={{marginBottom: "10px"}}
                     />
 
                     <div className='form-button-group'>

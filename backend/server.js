@@ -10,7 +10,6 @@ app.use(cors());
 
 // Middleware
 app.use(express.json()); // parse json bodies in the request object
-// app.use(loginSession);
 
 // Routes
 app.use("/user", require("./routes/userRoutes"));
