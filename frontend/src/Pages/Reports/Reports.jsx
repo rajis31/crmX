@@ -2,22 +2,20 @@ import React from 'react';
 import axios from "axios";
 import { Button, Typography } from '@mui/material';
 import Sidebar from '../../components/Sidebar/Sidebar';
+import {getCookie} from"../../Helpers/Helpers"
 
 function Reports() {
   const NotesReport = ()=>{
     axios({
-        url: 'http://localhost:3000/notes/report',
+        url: 'http://localhost:3000/notes/report/'+getCookie("session_id"),
         method: 'GET',
-        responseType: 'blob', 
-    },{
-      params: {
-        username: "raji"
-      }
+        responseType: 'blob'
+        
     }).then((response) => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'file.csv'); 
+        link.setAttribute('download', 'Notes.csv'); 
         document.body.appendChild(link);
         link.click();
     });
@@ -25,18 +23,15 @@ function Reports() {
 
   const CustomersReport = ()=>{
     axios({
-        url: 'http://localhost:3000/customers/report',
+        url: 'http://localhost:3000/customers/report/'+getCookie("session_id"),
         method: 'GET',
         responseType: 'blob', 
-    },{
-      params: {
-        username: "raji"
-      }
+
     }).then((response) => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'file.csv'); 
+        link.setAttribute('download', 'Customers.csv'); 
         document.body.appendChild(link);
         link.click();
     });
