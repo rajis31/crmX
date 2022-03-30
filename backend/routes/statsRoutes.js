@@ -7,9 +7,9 @@ router.route("/get_metric_stats/:session_id")
       .get(statsController.getMetricStats);
 
 router.route("/get_top_customers/:session_id")
-      .get(statsController.geTopCustomers);
+      .get(statsController.getTopCustomers);
 
 router.route("/get_cumulative_customer_total/:session_id")
-      .get(statsController.geCumulativeCustomerTotal);
+      .get(statsController.getCumulativeCustomerTotal);
 
 module.exports = router;
