@@ -1,18 +1,20 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import "./Login.css";
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Typography, Paper } from '@mui/material';
 import { useLocation } from 'wouter';
 import Alert from '@mui/material/Alert';
 import formHook from './FormHook';
 import validate from './Validate';
-
+import Slide from '@mui/material/Slide';
+import Box from '@mui/material/Box';
 
 export default function Login() {
-    const inputValues = {username: "", password: ""};
-    const { handleInputChange, handleLogin,errors,success } = formHook(inputValues, validate);
+    const inputValues = { username: "", password: "" };
+    const { handleInputChange, handleLogin, errors, success } = formHook(inputValues, validate);
     const [location, setLocation] = useLocation();
+    const containerRef = useRef();
 
-  
+
     const handleRegisterBtn = (e) => {
         setLocation("/register");
     }
@@ -20,7 +22,7 @@ export default function Login() {
     const handleForgotBtn = (e) => {
         setLocation("/forgot");
     }
-    
+
     return (
         <div className='login-form-container'>
             <h1>login</h1>
@@ -34,10 +36,10 @@ export default function Login() {
                 />
                 {
                     errors.usernameError ?
-                        <Alert 
-                            severity="error" 
+                        <Alert
+                            severity="error"
                             className='login-form__error-msg'
-                            >
+                        >
                             Please type your username in
                         </Alert> :
                         <></>
@@ -51,8 +53,8 @@ export default function Login() {
                 />
                 {
                     errors.passwordError ?
-                        <Alert 
-                            severity="error" 
+                        <Alert
+                            severity="error"
                             className='login-form__error-msg'
                         >
                             Please type your password in
@@ -62,8 +64,8 @@ export default function Login() {
 
                 {
                     success === false ?
-                        <Alert 
-                            severity="error" 
+                        <Alert
+                            severity="error"
                             className='login-form__error-msg'
                         >
                             Could not login. Please try again
@@ -91,8 +93,23 @@ export default function Login() {
                 </Button>
             </div>
 
+          
+
             <div className='login_tag'>
-                <a className='login_tag_link' href='https://www.dev-top.com'>Created by Raj Solanki <br/>(https//www.dev-top.com)</a>
+                <a 
+                    className='login_tag_link' 
+                    href='https://www.dev-top.com'
+                    >
+                        Created by Raj Solanki 
+                        <br />
+                        (https//www.dev-top.com)
+                </a>
+                <br />
+                <p
+                    style={{color: "white"}}
+                >
+                    This site uses cookies
+                </p>
             </div>
         </div>
 
