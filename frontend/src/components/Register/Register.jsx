@@ -39,7 +39,18 @@ export default function Register() {
                         >
                             Please type in a username
                         </Alert> :
-                        <div></div>
+                        <></>
+                }
+
+                {
+                    errors.userNameCheckError ?
+                        <Alert
+                            severity="error"
+                            className='register-form__error-msg'
+                        >
+                            Username Exists. Please try again
+                        </Alert> :
+                        <></>
                 }
                 <label htmlFor="email">Email</label>
                 <TextField
@@ -57,7 +68,7 @@ export default function Register() {
                         >
                             Please type in a valid email
                         </Alert> :
-                        <div></div>
+                        <></>
                 }
 
                 <label htmlFor="password">Password</label>
@@ -72,7 +83,7 @@ export default function Register() {
                 {
                     errors.passwordError ?
                         <Alert severity="error" className='register-form__error-msg'>Please type in a password</Alert> :
-                        <div></div>
+                        <></>
                 }
                 <label htmlFor="confirm_password">Confirm Password</label>
                 <TextField
@@ -91,7 +102,7 @@ export default function Register() {
                         >
                             Passwords do not match
                         </Alert> :
-                        <div></div>
+                        <></>
                 }
                 <Button
                     variant="contained"
@@ -110,7 +121,7 @@ export default function Register() {
                         >
                             Could not process your account. Please try again
                         </Alert> :
-                        <div></div>
+                        <></>
                 }
 
                 {
@@ -123,7 +134,7 @@ export default function Register() {
                             Account successfully created. You will be
                             redirected back to the login page.
                         </Alert> :
-                        <div></div>
+                        <></>
                 }
             </form>
 
