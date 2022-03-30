@@ -82,21 +82,21 @@ class Users {
         }
     }
 
-    async updateUser(username, img_path, user_id) {
+    async updateUser(session_id, img_path) {
         /**
          * Update user
          */
         
-        let [result, _] = await this.findUser(username);
+        let [result, _] = await this.identify_user(session_id);
         let user_found;
         result?.length > 0 ? user_found = true : user_found = false;
 
         if (user_found) {
+            let username = result[0]?.username;
             let sql = `
             UPDATE ${this.tablename}  
-               SET username = '${username}',
-                   img_path = '${img_path}'
-            WHERE id = '${user_id}';
+               SET img_path = '${img_path}'
+            WHERE username = '${username}';
            `
             return db.execute(sql);
         } else {
