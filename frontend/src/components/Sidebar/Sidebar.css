@@ -1,6 +1,8 @@
 .sidebar {
     background-color: #00b4d8;
     height: 100vh;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
     position: fixed;
     width: 80px;
     left: 0;
@@ -10,6 +12,7 @@
     align-items: center;
     z-index: 999;
 }
+
 .sidebar ul {
     display: flex;
     flex-direction: column;
@@ -32,6 +35,7 @@
     font-size: 12px;
     opacity: 0.8;
 }
+
 .sidebar a{
     color: #fff;
     text-decoration: none;
@@ -44,6 +48,7 @@
 .sidebar__icon {
     color: #fff;
 }
+
 .sidebar  li.active{
     opacity: 1 !important;
 }
