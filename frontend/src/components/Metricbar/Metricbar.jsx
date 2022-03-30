@@ -11,7 +11,6 @@ function Metricbar() {
     useEffect(async () => {
         let session_id = getCookie('session_id');
         let result = await axios.get("http://localhost:3000/stats/get_metric_stats/"+session_id);
-        console.log(result?.data);
         setMetrics(result?.data);
     }, []);
 
@@ -52,7 +51,7 @@ function Metricbar() {
                     </span>
                     <span className="metric-bar__value-change">
                         {
-                            parseFloat(metrics.customers_delta) < 0 ?
+                            parseFloat(metrics.customer_delta) < 0 ?
                                 <ArrowDownwardIcon className='metric-bar__icon negative' /> :
                                 <ArrowUpwardIcon className='metric-bar__icon positive' />
                         }
