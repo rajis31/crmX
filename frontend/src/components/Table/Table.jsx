@@ -70,7 +70,7 @@ const Table = ({ data, rowsPerPage, columns }) => {
 
       </> :
       <>
-        <Typography variant="h4" >
+        <Typography variant="h4" className="customer__no-data" >
           No Data Available
         </Typography>
       </>

@@ -87,6 +87,8 @@ function Customer() {
       <Button
         onClick={handleAddCustomerModal}
         variant="contained"
+        className='add-customer__btn'
+        style={{marginLeft: "100px", marginTop: "20px", marginBottom: "10px"}}
       >
         Add Customer
       </Button>

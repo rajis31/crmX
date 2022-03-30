@@ -8,7 +8,7 @@ import Modal from '@mui/material/Modal';
 
 const AddCustomerModal = ({ showForm, setShowForm, handleAddCustomer, states }) => {
     return (
-        <Modal open={showForm} className="add-customer-modal">
+        <Modal open={showForm} className="add-customer__modal">
             <Box>
                 <Typography
                     align='center'
