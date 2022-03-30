@@ -46,7 +46,7 @@ function Dashboard() {
             <Linechart
               data={cumulativeCustomer}
               xAxisDataKey="day"
-              lineKey="cum_sum"
+              lineKey="Cumulative Total"
               lineColor="#000"
               title="Total Customers Added (Past 30 days)"
             />
