@@ -1,10 +1,15 @@
 import React from "react";
+import "./TableFooter";
+
 
 const TableFooter = ({ tableRange, setPage, page, slice }) => {
 
 
   return (
-    <div className="tableFooter">
+    <div 
+        className="tableFooter"
+        style={{marginLeft: "100px", width: "700px"}}
+    >
       {tableRange.map((el, index) => (
         <button
           key={index}
