@@ -3,7 +3,6 @@ require("dotenv").config(); // ALLOWS ENVIRONMENT VARIABLES TO BE SET ON PROCESS
 const express      = require("express");
 const app          = express();
 const cors         = require("cors");
-const loginSession = require("./middleware/login");
 
 // Cross Origin 
 app.use(cors());
