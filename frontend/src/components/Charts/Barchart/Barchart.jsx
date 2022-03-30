@@ -14,8 +14,6 @@ import { Typography } from '@mui/material';
 
 const Barchart = ({ xAxisDataKey, barDataKey, fill, data, title }) => {
 
-
-
     return (
         <>
             {data?.length > 0 ?
@@ -56,7 +54,7 @@ const Barchart = ({ xAxisDataKey, barDataKey, fill, data, title }) => {
                         <BarChart
                             width={500}
                             height={300}
-                            data={[{ name: "No Data", y: 0 }]}
+                            data={[{ name: "No Data", "No Data": 0 }]}
                             margin={{
                                 top: 5,
                                 right: 30,
@@ -69,7 +67,7 @@ const Barchart = ({ xAxisDataKey, barDataKey, fill, data, title }) => {
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="y" fill={fill} />
+                            <Bar dataKey="No Data" fill={fill} />
                         </BarChart>
                     </ResponsiveContainer>
                 </>
