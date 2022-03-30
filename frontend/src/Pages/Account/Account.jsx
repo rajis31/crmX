@@ -1,32 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import "./Account.css";
 import Sidebar from '../../components/Sidebar/Sidebar';
-import { TextField, Typography, Button } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 import { Alert } from '@mui/material';
 import { Snackbar } from '@mui/material';
 import axios from 'axios';
+import { getCookie } from "../../Helpers/Helpers";
 
 function Account() {
-    const [username, setUsername] = useState("test");
     const [img, setImg] = useState();
     const [imgSizeNotification, setimgSizeNotification] = useState(false);
 
-    useEffect(()=>{
-
-    },[]);
-
     const handleAccountSubmit = async (e) => {
         const data = new FormData();
-        data.append("username", username);
+        const session_id = getCookie("session_id");
+
+        data.append("session_id", session_id);
         data.append("image", img);
 
         const config = {
             headers: { 'Content-Type': 'multipart/form-data' }
         }
 
-        axios.post("http://localhost:3000/user/update",data, config)
-             .then((res)=>{ console.log(res); })
-             .catch((err)=>{ console.log(err) });
+        axios.post("http://localhost:3000/user/update", data, config)
+            .then((res) => { console.log(res); })
+            .catch((err) => { console.log(err) });
     }
 
 
@@ -36,14 +34,14 @@ function Account() {
 
     const handleImgChange = (e) => {
         if (e.target.files && e.target.files[0]) {
-            let img       = e.target.files[0];
+            let img = e.target.files[0];
 
             let _URL = window.URL || window.webkitURL;
-            const new_img  = new Image(); 
-            let objectUrl  = _URL.createObjectURL(img);
-    
+            const new_img = new Image();
+            let objectUrl = _URL.createObjectURL(img);
+
             new_img.onload = function () {
-                if(this.height > 400 && this.width >400){
+                if (this.height > 400 && this.width > 400) {
                     console.log("Image size exceeds 400x400");
                 }
 
@@ -54,8 +52,8 @@ function Account() {
                 }
                 _URL.revokeObjectURL(objectUrl);
             };
-            new_img.src = objectUrl;          
-        }       
+            new_img.src = objectUrl;
+        }
     }
 
     return (
@@ -67,35 +65,28 @@ function Account() {
                 </Typography>
                 <div className='account-container__form-section' userid="1" >
                     <form className='account-container__form'>
-                        <label htmlFor='username'>Username</label>
-                        <TextField
-                            placeholder='Username'
-                            name='username'
-                            onChange={(e) => { setUsername(e.target.value);  }}
-                            value={username}
-                        />
                         <label htmlFor='profile_image'>
                             Profile Image
                             <br />
-                            <span 
+                            <span
                                 style={{
-                                        fontSize: "14px", 
-                                        fontWeight:500,
-                                        paddingTop: "10px"  
-                                    }}
+                                    fontSize: "14px",
+                                    fontWeight: 500,
+                                    paddingTop: "10px"
+                                }}
                             >
-                            (Image size must be less then 2 mb)
+                                (Image size must be less then 2 mb)
                             </span>
                         </label>
                         <input
                             accept="image/png, image/gif, image/jpeg"
                             name='image'
                             type="file"
-                            onChange={ handleImgChange }
-                            style={{marginBottom: "1rem"}}
+                            onChange={handleImgChange}
+                            style={{ marginBottom: "1rem" }}
                         />
 
-                        <Button 
+                        <Button
                             variant="contained"
                             onClick={handleAccountSubmit}
                         >
