@@ -57,14 +57,17 @@ exports.deleteNote = async (req, res, next) => {
 
 exports.generateNotesCsv = async (req, res, next) => {
   try{
-      let notes = new Notes();
+      let notes          = new Notes();
+      let user           = new Users();
       let session_id     = req.body.session_id;
       let [result,_]     = await user.identify_user(session_id);
       let username       = result[0]?.username;
       [result,_]         = await notes.findAll(username);
 
-      let fields     = ["id","title","body","date_created"];
-      let csv = json2csv(result,fields);
+      let fields         = ["id","title","body","date_created"];
+      let csv            = result.length>0 ? 
+                           json2csv(result,fields) : 
+                           json2csv([{"No Data":"No Data"}], ["No Data"]);
 
       res.attachment('Notes.csv');
       return res.status(200).send(csv); 
