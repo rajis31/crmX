@@ -3,8 +3,7 @@ const UserControllers = require("../controllers/userController");
 const router          = express.Router();
 const multer          = require('multer');
 const path            = require('path');
-const user            = require("../models/Users");
-const user_id         = 1;
+const Users            = require("../models/Users");
 
 let img_path = path.join(__dirname,"../../frontend/public/images");
 
@@ -12,8 +11,12 @@ let storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, img_path);
   },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + user_id +".jpg");
+  filename: async function (req, file, cb) {
+    let session_id    = req.body.session_id;
+    const user        = new Users();
+    let [result,_]    = await user.identify_user(session_id);
+    let username      = result[0]?.username; 
+    cb(null, file.fieldname + '-' + username +".jpg");
   }
 })
 
