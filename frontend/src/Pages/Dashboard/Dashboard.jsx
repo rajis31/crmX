@@ -5,7 +5,7 @@ import Metricbar from '../../components/Metricbar/Metricbar';
 import Barchart from '../../components/Charts/Barchart/Barchart';
 import Linechart from '../../components/Charts/Linechart/Linechart';
 import axios from "axios";
-import { getCookie } from "../../Helpers/Helpers";
+import { getCookie, generateUrl } from "../../Helpers/Helpers";
 
 
 function Dashboard() {
@@ -16,10 +16,10 @@ function Dashboard() {
 
   useEffect(async () => {
     let session_id = getCookie('session_id');
-    let data = await axios.get("http://localhost:3000/stats/get_top_customers/" + session_id);
+    let data = await axios.get(generateUrl("stats/get_top_customers/" + session_id));
     setTopCustomers(data.data);
 
-    data = await axios.get("http://localhost:3000/stats/get_cumulative_customer_total/" + session_id);
+    data = await axios.get(generateUrl("stats/get_cumulative_customer_total/" + session_id));
     setCumulativeCustomer(data.data);
   }, []);
 
