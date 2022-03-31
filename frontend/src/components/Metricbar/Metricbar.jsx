@@ -3,14 +3,16 @@ import "./Metricbar.css"
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import axios from 'axios';
-import { getCookie } from "../../Helpers/Helpers";
+import { getCookie, generateUrl } from "../../Helpers/Helpers";
 
 function Metricbar() {
     const [metrics, setMetrics] = useState([]);
+
+
     
     useEffect(async () => {
         let session_id = getCookie('session_id');
-        let result = await axios.get("http://localhost:3000/stats/get_metric_stats/"+session_id);
+        let result = await axios.get(generateUrl("stats/get_metric_stats/"+session_id));
         setMetrics(result?.data);
     }, []);
 
