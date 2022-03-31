@@ -59,7 +59,7 @@ exports.generateNotesCsv = async (req, res, next) => {
   try{
       let notes          = new Notes();
       let user           = new Users();
-      let session_id     = req.body.session_id;
+      let session_id     = req.params.session_id;
       let [result,_]     = await user.identify_user(session_id);
       let username       = result[0]?.username;
       [result,_]         = await notes.findAll(username);
