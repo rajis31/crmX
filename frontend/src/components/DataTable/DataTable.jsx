@@ -17,9 +17,9 @@ import { Typography } from '@mui/material';
 import { TextField } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import axios from "axios";
-import { getCookie } from "../../Helpers/Helpers";
+import { getCookie, generateUrl } from "../../Helpers/Helpers";
 
-function DataTable(props) {
+function DataTable() {
   const [rows, setRows] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showAddForm, setShowAddModal] = useState(false);
@@ -53,7 +53,7 @@ function DataTable(props) {
   useEffect(() => {
     async function fetchData() {
       let session_id = getCookie("session_id");
-      const request = await axios.get("http://localhost:3000/notes/"+session_id);
+      const request = await axios.get(generateUrl("notes/"+session_id));
       setRows(request.data);
     }
     fetchData();
@@ -61,7 +61,7 @@ function DataTable(props) {
 
   async function deleteRow(id) {
     let session_id = getCookie("session_id");
-    axios.post("http://localhost:3000/notes/delete", { id: id, session_id: session_id })
+    axios.post(generateUrl("notes/delete"), { id: id, session_id: session_id })
       .then(response => {
         console.log(response);
         let filteredData = rows.filter(row => row.id !== id);
@@ -74,7 +74,7 @@ function DataTable(props) {
 
   async function addRow() {
     let session_id = getCookie("session_id");
-    axios.post("http://localhost:3000/notes/add",
+    axios.post(generateUrl("notes/add"),
       {
         title: titleRef.current.value,
         body: bodyRef.current.value,
