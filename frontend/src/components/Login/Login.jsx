@@ -1,6 +1,6 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import "./Login.css";
-import { Button, TextField, Typography, Paper } from '@mui/material';
+import { Button, TextField} from '@mui/material';
 import { useLocation } from 'wouter';
 import Alert from '@mui/material/Alert';
 import formHook from './FormHook';
@@ -11,8 +11,6 @@ export default function Login() {
     const inputValues = { username: "", password: "" };
     const { handleInputChange, handleLogin, errors, success } = formHook(inputValues, validate);
     const [location, setLocation] = useLocation();
-    const containerRef = useRef();
-
 
     const handleRegisterBtn = (e) => {
         setLocation("/register");
