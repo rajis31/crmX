@@ -8,7 +8,7 @@ import { Typography } from '@mui/material';
 import Table from '../../components/Table/Table';
 import axios from 'axios';
 import Sidebar from '../../components/Sidebar/Sidebar';
-import { getCookie } from '../../Helpers/Helpers';
+import { getCookie, generateUrl } from '../../Helpers/Helpers';
 
 function Customer() {
   const [dataRetrieved, setDataRetrieved] = useState([]);
@@ -27,7 +27,7 @@ function Customer() {
   useEffect(() => {
     async function fetchData() {
       let session_id = getCookie("session_id");
-      let request = await axios.get("http://localhost:3000/customers/"+session_id);
+      let request = await axios.get(generateUrl("customers/"+session_id));
       setDataRetrieved(request.data);
 
       request.data?.length > 0 ? setColumns(Object
@@ -64,7 +64,7 @@ function Customer() {
 
   const handleAddCustomer = (e) => {
     let session_id = getCookie("session_id");
-    axios.post("http://localhost:3000/customers/create",
+    axios.post(generateUrl("customers/create"),
       {
         customer_name: data.customer_name,
         dob: data.dob,
