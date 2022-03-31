@@ -21,3 +21,8 @@ exports.getCookie = function getCookie(name) {
 exports.deleteCookie = function eraseCookie(name) {
     document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
+
+exports.generateUrl = (endpoint) => {
+    let base = "http://localhost:3000";
+    return base+"/"+endpoint;
+}
