@@ -1,21 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation } from "wouter";
-import { getCookie, setCookie } from "../../Helpers/Helpers";
+import { setCookie, generateUrl } from "../../Helpers/Helpers";
 
 
 const formHook = (inputValues, validate) => {
     const [inputs, setInputs] = useState(inputValues);
     const [errors, setErrors] = useState({});
     const [success, setSuccess] = useState();
-    const [location, setLocation] = useLocation();
-
-
-    useEffect(() => {
-        console.log(success);
-    }, [success]);
-
-
 
     const handleLogin = (e) => {
         const errorsFound = validate(inputs);
@@ -27,7 +19,7 @@ const formHook = (inputValues, validate) => {
         }
 
         if (!hasErrors) {
-            axios.post("http://localhost:3000/user/login",
+            axios.post(generateUrl("/user/login"),
                 {
                     username: inputs.username,
                     password: inputs.password,
