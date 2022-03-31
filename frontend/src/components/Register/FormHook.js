@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useLocation } from "wouter";
+import { generateUrl } from "../../Helpers/Helpers";
 
 const formHook = (inputValues, validate) => {
     const [inputs, setInputs] = useState(inputValues);
@@ -22,7 +23,7 @@ const formHook = (inputValues, validate) => {
         }
 
         if (!hasErrors) {
-            axios.post("http://localhost:3000/user/register",
+            axios.post(generateUrl("user/register"),
                 {
                     username: inputs.username,
                     password: inputs.password,
