@@ -3,7 +3,7 @@ import "./Topbar.css";
 import LogoutIcon from '@mui/icons-material/Logout';
 import axios from "axios";
 import { useLocation } from "wouter";
-import { getCookie, deleteCookie } from "../../Helpers/Helpers";
+import { getCookie, deleteCookie, generateUrl } from "../../Helpers/Helpers";
 
 
 export default function Topbar() {
@@ -12,9 +12,9 @@ export default function Topbar() {
   const [img, setImg] = useState("");
 
   useEffect(()=>{
-    axios.post("http://localhost:3000/user/retrieve_image_path",
+    axios.post(generateUrl("user/retrieve_image_path"),
     {
-        username: "test"
+        session_id: getCookie("session_id")
     })
     .then(response => {
         if (response.status === 200) {
@@ -26,7 +26,7 @@ export default function Topbar() {
 
   const handleLogout = (e) => {
     let session_id = getCookie("session_id");
-    axios.post("http://localhost:3000/user/logout",{ session_id: session_id })
+    axios.post(generateUrl("user/logout"),{ session_id: session_id })
          .then(response => {
               if(response.status === 200){
                  deleteCookie("session_id");
