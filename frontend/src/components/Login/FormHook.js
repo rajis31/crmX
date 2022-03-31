@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { useLocation } from "wouter";
 import { setCookie, generateUrl } from "../../Helpers/Helpers";
-
 
 const formHook = (inputValues, validate) => {
     const [inputs, setInputs] = useState(inputValues);
@@ -19,7 +17,7 @@ const formHook = (inputValues, validate) => {
         }
 
         if (!hasErrors) {
-            axios.post(generateUrl("/user/login"),
+            axios.post(generateUrl("user/login"),
                 {
                     username: inputs.username,
                     password: inputs.password,
