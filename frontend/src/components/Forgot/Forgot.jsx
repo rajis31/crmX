@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-
 import "./Forgot.css";
 import { Button, TextField } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import axios from 'axios';
 import { useLocation } from "wouter";
+import { generateUrl } from "../../Helpers/Helpers";
 
 
 function Forgot() {
@@ -21,7 +21,7 @@ function Forgot() {
     }
 
     const handleUsername = (e) => {
-        axios.post("http://localhost:3000/user/check_username",
+        axios.post(generateUrl("user/check_username"),
             {
                 username: username,
             })
@@ -34,7 +34,7 @@ function Forgot() {
             .catch(error => { setSuccess(false) });
     }
     const handleSubmit = (e) => {
-        axios.post("http://localhost:3000/user/forgot_password",
+        axios.post(generateUrl("user/forgot_password"),
             {
                 username: username,
                 password: password
