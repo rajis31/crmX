@@ -5,7 +5,7 @@ import { Typography, Button } from '@mui/material';
 import { Alert } from '@mui/material';
 import { Snackbar } from '@mui/material';
 import axios from 'axios';
-import { getCookie } from "../../Helpers/Helpers";
+import { getCookie, generateUrl } from "../../Helpers/Helpers";
 
 function Account() {
     const [img, setImg] = useState();
@@ -22,7 +22,7 @@ function Account() {
             headers: { 'Content-Type': 'multipart/form-data' }
         }
 
-        axios.post("http://localhost:3000/user/update", data, config)
+        axios.post(generateUrl("user/update"), data, config)
             .then((res) => { console.log(res); })
             .catch((err) => { console.log(err) });
     }
