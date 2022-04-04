@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import "./Register.css";
 import { TextField, Button } from '@mui/material';
 import Alert from '@mui/material/Alert';

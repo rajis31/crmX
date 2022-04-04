@@ -1,4 +1,5 @@
 import axios from "axios";
+import { generateUrl } from "../../Helpers/Helpers";
 
 const validate = async (inputs) => {
     const errors = {};
@@ -22,7 +23,7 @@ const validate = async (inputs) => {
     }
 
     // Check if username exists 
-    let usernameCheck = await axios.post("http://localhost:3000/user/check_username",
+    let usernameCheck = await axios.post("", generateUrl("/user/check_username"),
         { username: inputs.username });
 
     console.log(usernameCheck);
