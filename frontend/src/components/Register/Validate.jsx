@@ -23,7 +23,7 @@ const validate = async (inputs) => {
     }
 
     // Check if username exists 
-    let usernameCheck = await axios.post("", generateUrl("/user/check_username"),
+    let usernameCheck = await axios.post(generateUrl("user/check_username"),
         { username: inputs.username });
 
     console.log(usernameCheck);
@@ -35,4 +35,3 @@ const validate = async (inputs) => {
 }
 
 export default validate;
-
