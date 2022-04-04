@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getCookie } from '../Helpers/Helpers';
 import axios from 'axios';
+import { generateUrl } from "../Helpers/Helpers";
 
 const useAuth = () => {
   const [isAuth, setIsAuth] = useState(null);
@@ -11,7 +12,7 @@ const useAuth = () => {
       if (!session_id) setIsAuth(false);
 
       try {
-        const res = await axios.post("http://localhost:3000/user/check_session_id",
+        const res = await axios.post( generateUrl("user/check_session_id"),
           { session_id: session_id });
 
         if (res?.data[0]?.session_id === session_id) {

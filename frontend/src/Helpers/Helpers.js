@@ -23,6 +23,6 @@ exports.deleteCookie = function eraseCookie(name) {
 }
 
 exports.generateUrl = (endpoint) => {
-    let base = "http://localhost:3000";
+    let base = "https://sales.dev-top.com";
     return base+"/"+endpoint;
 }
