@@ -146,7 +146,7 @@ class Users {
         return db.execute(sql);
     }
 
-    async retrieve_image_path(username) {
+    async retrieve_image_path(session_id) {
         /**
          *  Retrieve Image Path
          */
@@ -154,7 +154,7 @@ class Users {
         let sql = `
             SELECT img_path 
             FROM ${this.tablename}
-            WHERE username = '${username}';
+            WHERE session_id = '${session_id}';
         `;
 
         return db.execute(sql);
