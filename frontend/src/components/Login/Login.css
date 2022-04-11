@@ -56,16 +56,22 @@ h1 {
 .login_tag{
   background-color: #000;
   position: absolute;
-  bottom: 20px;
-  right: 25px;
-  padding: 20px;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  padding: 10px;
   text-align: center;
   border-radius: 5px;
+  min-width: 300px;
 }
 .login_tag a {
   color: #fff;
   font-size: 13px;
   text-decoration: none;
+  margin: 0;
+}
+.login_tag p {
+  margin: 10px 0 0 0;
 }
 
 .login-form__error-msg{
