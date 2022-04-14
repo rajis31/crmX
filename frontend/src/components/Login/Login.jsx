@@ -1,6 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 import "./Login.css";
 import { Button, TextField} from '@mui/material';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import CloseIcon from '@mui/icons-material/Close';
 import { useLocation } from 'wouter';
 import Alert from '@mui/material/Alert';
 import formHook from './FormHook';
@@ -11,6 +13,7 @@ export default function Login() {
     const inputValues = { username: "", password: "" };
     const { handleInputChange, handleLogin, errors, success } = formHook(inputValues, validate);
     const [location, setLocation] = useLocation();
+    const [showInfo,setShowInfo] = useState(false);
 
     const handleRegisterBtn = (e) => {
         setLocation("/register");
@@ -18,6 +21,9 @@ export default function Login() {
 
     const handleForgotBtn = (e) => {
         setLocation("/forgot");
+    }
+    const showCookieMessage = (e) => {
+        setShowInfo(true);
     }
 
     return (
@@ -91,24 +97,33 @@ export default function Login() {
             </div>
 
           
-
-            <div className='login_tag'>
-                <a 
-                    className='login_tag_link' 
-                    href='https://www.dev-top.com'
-                    >
-                        Created by Raj Solanki 
-                        <br />
-                        (https//www.dev-top.com)
-                </a>
-                <br />
-                <p
-                    style={{color: "white"}}
-                >
-                    This site uses cookies
-                </p>
+            <div className='more-info' onClick={showCookieMessage}>
+                    <HelpOutlineIcon />
             </div>
-        </div>
 
+                { showInfo ? 
+                (
+                     <div className='show-info'>
+                        <CloseIcon 
+                            style={{color: "#fff"}}
+                        />
+                        <a 
+                            className='show-info__link' 
+                            href='https://www.dev-top.com'
+                            >
+                                Created by Raj Solanki 
+                                <br />
+                                (https//www.dev-top.com)
+                        </a>
+                        <br />
+                        <p
+                            style={{color: "white"}}
+                        >
+                            This site uses cookies
+                        </p>
+                    </div>
+                ) :<></>}
+
+        </div>
     )
 }

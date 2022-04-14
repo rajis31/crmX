@@ -53,7 +53,14 @@ h1 {
   margin-top: 3rem;
 }
 
-.login_tag{
+.more-info{
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.show-info{
   background-color: #000;
   position: absolute;
   top: 90%;
@@ -64,13 +71,13 @@ h1 {
   border-radius: 5px;
   min-width: 300px;
 }
-.login_tag a {
+.show-info a {
   color: #fff;
   font-size: 13px;
   text-decoration: none;
   margin: 0;
 }
-.login_tag p {
+.show-info p {
   margin: 10px 0 0 0;
 }
 
