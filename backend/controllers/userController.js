@@ -11,6 +11,7 @@ exports.loginUser = async (req, res, next) => {
     let authorize = await user.authorize(username, password);
     if (authorize) {
       let session_id = Crypto.randomBytes(24).toString('base64');
+      session_id     = session_id.replace("/","");
       user.updateSessionId(username, session_id);
       return res.status(200).json({ "msg": "User Found", "found": true, "session_id": session_id });
 
