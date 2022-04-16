@@ -106,6 +106,8 @@ export default function Login() {
                      <div className='show-info'>
                         <CloseIcon 
                             style={{color: "#fff"}}
+                            className="close-icon"
+                            onClick={e => setShowInfo(false)}
                         />
                         <a 
                             className='show-info__link' 

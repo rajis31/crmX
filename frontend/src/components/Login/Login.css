@@ -81,6 +81,13 @@ h1 {
   margin: 10px 0 0 0;
 }
 
+.close-icon{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
 .login-form__error-msg{
     margin-top: 1rem;
 }
