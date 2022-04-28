@@ -33,6 +33,9 @@
         .metric-bar .metric{
             margin-bottom: 2rem;
         }
+        .metric-bar .filler{
+            display: none;
+        }
         .charts{
             flex-direction: column;
             overflow-x: scroll;
