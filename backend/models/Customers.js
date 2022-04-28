@@ -83,17 +83,17 @@ class Customers {
          */
 
         let sql = `
-            SELECT
-            IFNULL(AVG(datediff(curdate(), date_created)),0) as days_between 
+        SELECT
+            IFNULL(round(count(*)/datediff(Now(), Date(concat_ws("-", year(curdate()),1,1))),0),0) as avg_customers_ytd
             FROM customers
-            WHERE datediff(curdate(), date_created)  <= 365
-            AND username = "${username}";
+            WHERE date_created>=Date(concat_ws("-", year(curdate()),1,1))
+            AND username = '${username}';
         `;
 
         return db.execute(sql);
     }
 
-    delta(username, days){
+    delta(username, days) {
         /**
          * Return the change in customers created
          */
@@ -124,7 +124,7 @@ class Customers {
         return db.execute(sql);
     }
 
-    topX(username,x){
+    topX(username, x) {
         /**
          * Return top X customers
          */
@@ -139,7 +139,35 @@ class Customers {
         return db.execute(sql);
     }
 
-    cumulative(username){
+    total_acquistion_cost(username) {
+      /**
+       *  Returns total acq. cost for customers 
+       *  entered 
+       */
+        let sql = `
+            SELECT IFNULL(sum(acquisition_cost),0) as total_acquistion_cost 
+            FROM customers 
+            WHERE username='${username}';
+       `;
+
+        return db.execute(sql);
+    }
+
+    total_profit(username) {
+        /**
+         *  Returns total projected profit for customers 
+         *  entered 
+         */
+          let sql = `
+              SELECT sum(profit) as total_profit 
+              FROM customers 
+              WHERE username='${username}';
+         `;
+  
+          return db.execute(sql);
+      }
+
+    cumulative(username) {
         let sql = `
             select p.day, p.cnt, sum(p.cnt) over (order by day) as 'Cumulative Total'  from 
             ( SELECT 
