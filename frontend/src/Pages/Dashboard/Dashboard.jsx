@@ -17,7 +17,6 @@ function Dashboard() {
   useEffect(async () => {
     let session_id = getCookie('session_id');
     let data = await axios.get(generateUrl("stats/get_top_customers/" + session_id));
-    console.log(data.data);
     setTopCustomers(data.data);
 
     data = await axios.get(generateUrl("stats/get_cumulative_customer_total/" + session_id));

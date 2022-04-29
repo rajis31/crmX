@@ -26,7 +26,6 @@ function Forgot() {
                 username: username,
             })
             .then(response => {
-                console.log(response);
                 if (response.status === 200) {
                     response.data?.found ? setShowPassword(true) : setShowPassword(false);
                 }

@@ -26,7 +26,6 @@ const validate = async (inputs) => {
     let usernameCheck = await axios.post(generateUrl("user/check_username"),
         { username: inputs.username });
 
-    console.log(usernameCheck);
     if (usernameCheck.data.found) {
         errors.userNameCheckError = true;
     }

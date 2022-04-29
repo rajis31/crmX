@@ -61,8 +61,6 @@ exports.generateCustomerCsv = async (req, res, next) => {
     let username = result[0]?.username;
     [result, _] = await customer.findAll(username);
 
-    console.log(result);
-
     let fields = ["customer_name", "date_of_birth", "email", "profit", "acquisition_cost", "date_created"];
     let csv = result.length > 0 ?
       json2csv(result, fields) :

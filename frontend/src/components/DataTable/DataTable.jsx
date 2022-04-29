@@ -63,7 +63,6 @@ function DataTable() {
     let session_id = getCookie("session_id");
     axios.post(generateUrl("notes/delete"), { id: id, session_id: session_id })
       .then(response => {
-        console.log(response);
         let filteredData = rows.filter(row => row.id !== id);
         setRows(filteredData);
         setShowModal(true);
