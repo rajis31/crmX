@@ -37,7 +37,7 @@ const Barchart = ({ xAxisDataKey, barDataKey, fill, data, title }) => {
                         >
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey={xAxisDataKey} />
-                            <YAxis />
+                            <YAxis  type="number" domain={[0, 'dataMax']} />
                             <Tooltip />
                             <Legend />
                             <Bar dataKey={barDataKey} fill={fill} />
