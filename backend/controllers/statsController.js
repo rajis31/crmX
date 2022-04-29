@@ -42,8 +42,8 @@ exports.getTopCustomers = async (req, res, next) => {
     const customers    = new Customers();
     const user         = new Users();
     let session_id     = req.params.session_id;
-    let result         = user.identify_user(session_id);
-        username       = result[0]?.username;
+    let [result, ]      = await user.identify_user(session_id);
+    let username       = result[0]?.username;
 
     let [topCustomers,] = await customers.topX(username, 5);
     res.status(200).json(topCustomers);
@@ -61,8 +61,8 @@ exports.getCumulativeCustomerTotal = async (req, res, next) => {
     const customers      = new Customers();
     const user           = new Users();
     let session_id       = req.params.session_id;
-    let result           = user.identify_user(session_id);
-        username         = result[0]?.username;
+    let [result,]        = await user.identify_user(session_id);
+    let username         = await result[0]?.username;
 
     let [cumulative,]    = await customers.cumulative(username);
     res.status(200).json(cumulative);

@@ -135,7 +135,6 @@ class Customers {
             ORDER by profit desc
             LIMIT ${x}; 
         `;
-        console.log(sql);
         return db.execute(sql);
     }
 

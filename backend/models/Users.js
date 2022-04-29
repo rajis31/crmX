@@ -177,7 +177,7 @@ class Users {
 
     async identify_user(session_id) {
         /**
-         *  
+         *  Identify username based on session id
          */
         
         let sql = `

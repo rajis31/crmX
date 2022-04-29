@@ -24,5 +24,6 @@ exports.deleteCookie = function eraseCookie(name) {
 
 exports.generateUrl = (endpoint) => {
     let base = "https://sales.dev-top.com/api";
+    // let base = "http://localhost:3000";
     return base+"/"+endpoint;
 }
