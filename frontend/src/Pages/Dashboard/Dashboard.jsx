@@ -12,17 +12,19 @@ function Dashboard() {
 
   const [topCustomers, setTopCustomers] = useState([]);
   const [cumulativeCustomer, setCumulativeCustomer] = useState([]);
+  const [dataMax, setDataMax] = useState(0);
 
 
   useEffect(async () => {
     let session_id = getCookie('session_id');
     let data = await axios.get(generateUrl("stats/get_top_customers/" + session_id));
+    data.data.length > 0 ? setDataMax(Math.max.apply(Math, data.data.map(e=>e.profit))) 
+                           : setDataMax(100);
     setTopCustomers(data.data);
 
     data = await axios.get(generateUrl("stats/get_cumulative_customer_total/" + session_id));
     setCumulativeCustomer(data.data);
   }, []);
-
 
 
   return (
@@ -39,6 +41,7 @@ function Dashboard() {
               fill="#4361ee"
               data={topCustomers}
               title="Top 5 Customers"
+              dataMax={dataMax}
             />
           </div>
 

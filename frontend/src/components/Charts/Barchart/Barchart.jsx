@@ -12,7 +12,7 @@ import {
 } from 'recharts';
 import { Typography } from '@mui/material';
 
-const Barchart = ({ xAxisDataKey, barDataKey, fill, data, title }) => {
+const Barchart = ({ xAxisDataKey, barDataKey, fill, data, title, dataMax }) => {
 
     return (
         <>
@@ -37,7 +37,7 @@ const Barchart = ({ xAxisDataKey, barDataKey, fill, data, title }) => {
                         >
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey={xAxisDataKey} />
-                            <YAxis  type="number" domain={[0, 'dataMax']} />
+                            <YAxis  type="number" domain={[0, dataMax]} />
                             <Tooltip />
                             <Legend />
                             <Bar dataKey={barDataKey} fill={fill} />
