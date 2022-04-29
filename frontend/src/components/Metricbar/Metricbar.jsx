@@ -11,7 +11,6 @@ function Metricbar() {
     useEffect(async () => {
         let session_id = getCookie('session_id');
         let result = await axios.get(generateUrl("stats/get_metric_stats/" + session_id));
-        console.log(result.data);
         setMetrics(result?.data);
     }, []);
 
